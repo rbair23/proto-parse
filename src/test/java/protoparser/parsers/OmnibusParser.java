@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -94,28 +95,28 @@ public class OmnibusParser extends ProtoParser {
 
 	private OneOf<Everything, Object> everything; // WHAT DO WE DO HERE??!!
 
-	private List<Integer> int32NumberList;
-	private List<Long> int64NumberList;
-	private List<Integer> uint32NumberList;
-	private List<Long> uint64NumberList;
-	private List<Boolean> flagList;
-	private List<Suit> suitEnumList;
+	private List<Integer> int32NumberList = Collections.emptyList();
+	private List<Long> int64NumberList = Collections.emptyList();
+	private List<Integer> uint32NumberList = Collections.emptyList();
+	private List<Long> uint64NumberList = Collections.emptyList();
+	private List<Boolean> flagList = Collections.emptyList();
+	private List<Suit> suitEnumList = Collections.emptyList();
 
-	private List<Integer> sint32NumberList;
-	private List<Long> sint64NumberList;
+	private List<Integer> sint32NumberList = Collections.emptyList();
+	private List<Long> sint64NumberList = Collections.emptyList();
 
-	private List<Integer> sfixed32NumberList;
-	private List<Long> sfixed64NumberList;
-	private List<Integer> fixed32NumberList;
-	private List<Long> fixed64NumberList;
-	private List<Float> floatNumberList;
-	private List<Double> doubleNumberList;
+	private List<Integer> sfixed32NumberList = Collections.emptyList();
+	private List<Long> sfixed64NumberList = Collections.emptyList();
+	private List<Integer> fixed32NumberList = Collections.emptyList();
+	private List<Long> fixed64NumberList = Collections.emptyList();
+	private List<Float> floatNumberList = Collections.emptyList();
+	private List<Double> doubleNumberList = Collections.emptyList();
 
-	private List<String> memoList;
-	private List<byte[]> randomBytesList;
-	private List<Nested> nestedList;
+	private List<String> memoList = Collections.emptyList();
+	private List<byte[]> randomBytesList = Collections.emptyList();
+	private List<Nested> nestedList = Collections.emptyList();
 
-	private List<OneOf<Fruit, Object>> fruitList; // Apple or Banana
+	private List<OneOf<Fruit, Object>> fruitList = Collections.emptyList(); // Apple or Banana
 
 	public int getInt32Number() {
 		return int32Number;
@@ -489,4 +490,64 @@ public class OmnibusParser extends ProtoParser {
 			default -> throw new AssertionError("Not implemented in test code fieldNum='" + fieldNum + "'");
 		}
 	}
+
+	@Override
+	public void intList(int fieldNum, List<Integer> value) {
+		switch (fieldNum) {
+			case 300 -> int32NumberList = value;
+			case 302 -> uint32NumberList = value;
+			case 306 -> sint32NumberList = value;
+			case 308 -> sfixed32NumberList = value;
+			case 310 -> fixed32NumberList = value;
+			default -> throw new AssertionError("Not implemented in test code fieldNum='" + fieldNum + "'");
+		}
+	}
+
+	@Override
+	public void longList(int fieldNum, List<Long> value) {
+		switch (fieldNum) {
+			case 301 -> int64NumberList = value;
+			case 303 -> uint64NumberList = value;
+			case 307 -> sint64NumberList = value;
+			case 309 -> sfixed64NumberList = value;
+			case 311 -> fixed64NumberList = value;
+			default -> throw new AssertionError("Not implemented in test code fieldNum='" + fieldNum + "'");
+		}
+	}
+
+	@Override
+	public void booleanList(int fieldNum, List<Boolean> value) {
+		switch (fieldNum) {
+			case 304 -> flagList = value;
+			default -> throw new AssertionError("Not implemented in test code fieldNum='" + fieldNum + "'");
+		}
+	}
+
+	@Override
+	public void stringList(int fieldNum, List<String> value) {
+		switch (fieldNum) {
+			case 314 -> memoList = value;
+			default -> throw new AssertionError("Not implemented in test code fieldNum='" + fieldNum + "'");
+		}
+	}
+
+	@Override
+	public void bytesList(int fieldNum, List<byte[]> value) {
+		switch (fieldNum) {
+			case 315 -> randomBytesList = value;
+			default -> throw new AssertionError("Not implemented in test code fieldNum='" + fieldNum + "'");
+		}
+	}
+
+//	@Override
+//	public void objectList(int fieldNum, long length, InputStream protoStream) throws IOException, MalformedProtobufException {
+//		switch (fieldNum) {
+//			case 3 -> nested = new NestedParser().parse(protoStream);
+//			case 200 -> fruit = new OneOf<>(fieldNum, Fruit.APPLE, new AppleParser().parse(protoStream));
+//			case 201 -> fruit = new OneOf<>(fieldNum, Fruit.BANANA, new BananaParser().parse(protoStream));
+//			case 253 -> everything = new OneOf<>(fieldNum, Everything.NESTED, new NestedParser().parse(protoStream));
+//			default -> throw new AssertionError("Not implemented in test code fieldNum='" + fieldNum + "'");
+//		}
+//	}
+
 }

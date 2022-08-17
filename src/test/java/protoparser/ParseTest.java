@@ -14,6 +14,8 @@ import test.proto.Banana;
 import test.proto.Nested;
 import test.proto.Omnibus;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -422,5 +424,225 @@ class ParseTest {
 		assertEquals(Everything.NESTED, parser.getEverything().kind());
 		assertEquals(new protoparser.model.Nested("Reminder"), parser.getEverything().value());
 	}
+
+	static Stream<List<Integer>> intList() {
+		return Stream.of(
+				Collections.emptyList(),
+				List.of(0, 1, 2),
+				List.of(Integer.MIN_VALUE, -42, -21, 0, 21, 42, Integer.MAX_VALUE));
+	}
+
+	static Stream<List<Integer>> uintList() {
+		return Stream.of(
+				Collections.emptyList(),
+				List.of(0, 1, 2, Integer.MAX_VALUE));
+	}
+
+	static Stream<List<Long>> longList() {
+		return Stream.of(
+				Collections.emptyList(),
+				List.of(0L, 1L, 2L),
+				List.of(Long.MIN_VALUE, -42L, -21L, 0L, 21L, 42L, Long.MAX_VALUE));
+	}
+
+	static Stream<List<Long>> ulongList() {
+		return Stream.of(
+				Collections.emptyList(),
+				List.of(0L, 1L, 2L, Long.MAX_VALUE));
+	}
+
+	static Stream<List<Boolean>> boolList() {
+		return Stream.of(
+				Collections.emptyList(),
+				List.of(false, false, true),
+				List.of(true, false, true, true, false, true, false, false, false, true));
+	}
+
+	static Stream<List<Suit>> suitList() {
+		return Stream.of(
+				Collections.emptyList(),
+				List.of(Suit.ACES, Suit.CLUBS, Suit.DIAMONDS, Suit.SPADES),
+				// TODO add more, just for good measure
+				List.of(Suit.ACES, Suit.ACES, Suit.DIAMONDS, Suit.ACES));
+	}
+
+	@ParameterizedTest
+	@MethodSource("intList")
+	void parseInt32ListOnly(List<Integer> list) throws Exception {
+		final var protobufBuilder = test.proto.Omnibus.newBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			protobufBuilder.addInt32NumberList(list.get(i));
+		}
+		final var protobuf = protobufBuilder.build().toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(list, parser.getInt32NumberList());
+	}
+
+	@ParameterizedTest
+	@MethodSource("uintList")
+	void parseUint32ListOnly(List<Integer> list) throws Exception {
+		final var protobufBuilder = test.proto.Omnibus.newBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			protobufBuilder.addUint32NumberList(list.get(i));
+		}
+		final var protobuf = protobufBuilder.build().toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(list, parser.getUint32NumberList());
+	}
+
+	@ParameterizedTest
+	@MethodSource("intList")
+	void parseSint32ListOnly(List<Integer> list) throws Exception {
+		final var protobufBuilder = test.proto.Omnibus.newBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			protobufBuilder.addSint32NumberList(list.get(i));
+		}
+		final var protobuf = protobufBuilder.build().toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(list, parser.getSint32NumberList());
+	}
+
+	@ParameterizedTest
+	@MethodSource("intList")
+	void parseSfixed32ListOnly(List<Integer> list) throws Exception {
+		final var protobufBuilder = test.proto.Omnibus.newBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			protobufBuilder.addSfixed32NumberList(list.get(i));
+		}
+		final var protobuf = protobufBuilder.build().toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(list, parser.getSfixed32NumberList());
+	}
+
+	@ParameterizedTest
+	@MethodSource("intList")
+	void parseFixed32ListOnly(List<Integer> list) throws Exception {
+		final var protobufBuilder = test.proto.Omnibus.newBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			protobufBuilder.addFixed32NumberList(list.get(i));
+		}
+		final var protobuf = protobufBuilder.build().toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(list, parser.getFixed32NumberList());
+	}
+
+	@ParameterizedTest
+	@MethodSource("longList")
+	void parseInt64ListOnly(List<Long> list) throws Exception {
+		final var protobufBuilder = test.proto.Omnibus.newBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			protobufBuilder.addInt64NumberList(list.get(i));
+		}
+		final var protobuf = protobufBuilder.build().toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(list, parser.getInt64NumberList());
+	}
+
+	@ParameterizedTest
+	@MethodSource("ulongList")
+	void parseUint64ListOnly(List<Long> list) throws Exception {
+		final var protobufBuilder = test.proto.Omnibus.newBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			protobufBuilder.addUint64NumberList(list.get(i));
+		}
+		final var protobuf = protobufBuilder.build().toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(list, parser.getUint64NumberList());
+	}
+
+	@ParameterizedTest
+	@MethodSource("longList")
+	void parseSint64ListOnly(List<Long> list) throws Exception {
+		final var protobufBuilder = test.proto.Omnibus.newBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			protobufBuilder.addSint64NumberList(list.get(i));
+		}
+		final var protobuf = protobufBuilder.build().toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(list, parser.getSint64NumberList());
+	}
+
+	@ParameterizedTest
+	@MethodSource("longList")
+	void parseSfixed64ListOnly(List<Long> list) throws Exception {
+		final var protobufBuilder = test.proto.Omnibus.newBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			protobufBuilder.addSfixed64NumberList(list.get(i));
+		}
+		final var protobuf = protobufBuilder.build().toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(list, parser.getSfixed64NumberList());
+	}
+
+	@ParameterizedTest
+	@MethodSource("longList")
+	void parseFixed64ListOnly(List<Long> list) throws Exception {
+		final var protobufBuilder = test.proto.Omnibus.newBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			protobufBuilder.addFixed64NumberList(list.get(i));
+		}
+		final var protobuf = protobufBuilder.build().toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(list, parser.getFixed64NumberList());
+	}
+
+	@ParameterizedTest
+	@MethodSource("boolList")
+	void parseBooleanListOnly(List<Boolean> list) throws Exception {
+		final var protobufBuilder = test.proto.Omnibus.newBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			protobufBuilder.addFlagList(list.get(i));
+		}
+		final var protobuf = protobufBuilder.build().toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(list, parser.getFlagList());
+	}
+
+	@ParameterizedTest
+	@MethodSource("suitList")
+	void parseEnumListOnly(List<Suit> list) throws Exception {
+//		final var protobufBuilder = test.proto.Omnibus.newBuilder();
+//		for (int i=0; i<list.size(); i++) {
+//			protobufBuilder.addFlagList(list.get(i));
+//		}
+//		final var protobuf = protobufBuilder.build().toByteArray();
+//
+//		parser.parse(protobuf);
+//		assertEquals(list, parser.getFlagList());
+	}
+
+//	static Stream<List<String>> stringList() {
+//		return Stream.of(
+//				Collections.emptyList(),
+//				List.of("first", "third"),
+//				List.of("I", "have", "a", "joke", ",", "Who's", "on", "first?"));
+//	}
+//
+//	@ParameterizedTest
+//	@MethodSource("stringList")
+//	void parseStringListOnly(List<String> list) throws Exception {
+//		final var protobufBuilder = test.proto.Omnibus.newBuilder();
+//		for (int i=0; i<list.size(); i++) {
+//			protobufBuilder.addMemoList(list.get(i));
+//		}
+//		final var protobuf = protobufBuilder.build().toByteArray();
+//
+//		parser.parse(protobuf);
+//		assertEquals(list, parser.getMemoList());
+//	}
+
+	// Also need object test and one-of test
+
 
 }
