@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5188fc4d-d373-4331-950f-2b686575846a" name="Changes" comment="Fix build issue and mysterious IDEA issue (need idea plugin)">
-      <changelist_data name="Richard Bair" email="richard.bair@swirldslabs.com" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/ParseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/protoparser/ParseTest.java" afterDir="false" />
+    <list default="true" id="5188fc4d-d373-4331-950f-2b686575846a" name="Changes" comment="Add tests for random bytes and nested objects">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,7 +152,7 @@
       <recent name="protoparser.model" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.proto-parse [build]">
+  <component name="RunManager" selected="Gradle.ParseTest">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="proto-parse" />
       <working_directory value="$PROJECT_DIR$" />
@@ -175,6 +172,52 @@
       <framework value="gotest" />
       <method v="2" />
     </configuration>
+    <configuration name="ParseTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;protoparser.ParseTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="ParseTest.parseByteArraysOnly" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;protoparser.ParseTest.parseByteArraysOnly&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="proto-parse [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -187,48 +230,6 @@
         <option name="taskNames">
           <list>
             <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="proto-parse [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="clean" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="proto-parse [generateProto]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="generateProto" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -282,11 +283,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.ParseTest" />
+        <item itemvalue="Gradle.ParseTest.parseByteArraysOnly" />
         <item itemvalue="Gradle.proto-parse [build]" />
         <item itemvalue="Gradle.proto-parse [test]" />
         <item itemvalue="Gradle.proto-parse [generateTestProto]" />
-        <item itemvalue="Gradle.proto-parse [generateProto]" />
-        <item itemvalue="Gradle.proto-parse [clean]" />
       </list>
     </recent_temporary>
   </component>
@@ -304,7 +305,7 @@
       <workItem from="1660698357040" duration="2372000" />
       <workItem from="1660708858898" duration="1905000" />
       <workItem from="1660711194811" duration="5420000" />
-      <workItem from="1660745856675" duration="360000" />
+      <workItem from="1660745856675" duration="1730000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1660158953075</created>
@@ -320,7 +321,14 @@
       <option name="project" value="LOCAL" />
       <updated>1660744406408</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Add tests for random bytes and nested objects">
+      <created>1660747529925</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1660747529925</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -341,7 +349,8 @@
     <MESSAGE value="Initial commit" />
     <MESSAGE value="A more complete implementation of a parser" />
     <MESSAGE value="Fix build issue and mysterious IDEA issue (need idea plugin)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix build issue and mysterious IDEA issue (need idea plugin)" />
+    <MESSAGE value="Add tests for random bytes and nested objects" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add tests for random bytes and nested objects" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
