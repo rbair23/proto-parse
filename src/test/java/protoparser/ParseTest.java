@@ -1,17 +1,22 @@
 package protoparser;
 
 import com.google.protobuf.ByteString;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import protoparser.model.Everything;
+import protoparser.model.Fruit;
 import protoparser.model.Suit;
 import protoparser.parsers.OmnibusParser;
+import test.proto.Apple;
+import test.proto.Banana;
 import test.proto.Nested;
+import test.proto.Omnibus;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ParseTest {
 
@@ -226,6 +231,196 @@ class ParseTest {
 
 		parser.parse(protobuf);
 		assertEquals(new protoparser.model.Nested(nestedMemo), parser.getNested());
+	}
+
+	@Test
+	void parseOneOfFruitOnly() throws Exception {
+		var protobuf = Omnibus.newBuilder()
+				.setApple(Apple.newBuilder().setVariety("Gala").build())
+				.build()
+				.toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(Fruit.APPLE, parser.getFruit().kind());
+		assertEquals(new protoparser.model.Apple("Gala"), parser.getFruit().value());
+
+		protobuf = Omnibus.newBuilder()
+				.setBanana(Banana.newBuilder().setVariety("Yellow").build())
+				.build()
+				.toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(Fruit.BANANA, parser.getFruit().kind());
+		assertEquals(new protoparser.model.Banana("Yellow"), parser.getFruit().value());
+	}
+
+	@Test
+	void parseOneOfFruitOnlyLastOneWins() throws Exception {
+		var protobuf = Omnibus.newBuilder()
+				.setApple(Apple.newBuilder().setVariety("Gala").build())
+				.setBanana(Banana.newBuilder().setVariety("Yellow").build())
+				.build()
+				.toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(Fruit.BANANA, parser.getFruit().kind());
+		assertEquals(new protoparser.model.Banana("Yellow"), parser.getFruit().value());
+	}
+
+	@Test
+	void parseOneOfEverythingOnly() throws Exception {
+		var protobuf = Omnibus.newBuilder()
+				.setInt32Unique(-42)
+				.build()
+				.toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(Everything.INT32, parser.getEverything().kind());
+		assertEquals(-42, parser.getEverything().value());
+
+		protobuf = Omnibus.newBuilder()
+				.setInt64Unique(-43)
+				.build()
+				.toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(Everything.INT64, parser.getEverything().kind());
+		assertEquals(-43L, parser.getEverything().value());
+
+		protobuf = Omnibus.newBuilder()
+				.setUint32Unique(44)
+				.build()
+				.toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(Everything.UINT32, parser.getEverything().kind());
+		assertEquals(44, parser.getEverything().value());
+
+		protobuf = Omnibus.newBuilder()
+				.setUint64Unique(45)
+				.build()
+				.toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(Everything.UINT64, parser.getEverything().kind());
+		assertEquals(45L, parser.getEverything().value());
+
+		protobuf = Omnibus.newBuilder()
+				.setFlagUnique(true)
+				.build()
+				.toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(Everything.FLAG, parser.getEverything().kind());
+		assertTrue((boolean) parser.getEverything().value());
+
+		protobuf = Omnibus.newBuilder()
+				.setSuitEnumUnique(test.proto.Suit.CLUBS)
+				.build()
+				.toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(Everything.SUIT, parser.getEverything().kind());
+		assertEquals(Suit.CLUBS, parser.getEverything().value());
+
+		protobuf = Omnibus.newBuilder()
+				.setSint32Unique(-46)
+				.build()
+				.toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(Everything.SINT32, parser.getEverything().kind());
+		assertEquals(-46, parser.getEverything().value());
+
+		protobuf = Omnibus.newBuilder()
+				.setSint64Unique(-47)
+				.build()
+				.toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(Everything.SINT64, parser.getEverything().kind());
+		assertEquals(-47L, parser.getEverything().value());
+
+		protobuf = Omnibus.newBuilder()
+				.setSfixed32Unique(-48)
+				.build()
+				.toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(Everything.SFIXED32, parser.getEverything().kind());
+		assertEquals(-48, parser.getEverything().value());
+
+		protobuf = Omnibus.newBuilder()
+				.setSfixed64Unique(-49)
+				.build()
+				.toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(Everything.SFIXED64, parser.getEverything().kind());
+		assertEquals(-49L, parser.getEverything().value());
+
+		protobuf = Omnibus.newBuilder()
+				.setFixed32Unique(50)
+				.build()
+				.toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(Everything.FIXED32, parser.getEverything().kind());
+		assertEquals(50, parser.getEverything().value());
+
+		protobuf = Omnibus.newBuilder()
+				.setFixed64Unique(51)
+				.build()
+				.toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(Everything.FIXED64, parser.getEverything().kind());
+		assertEquals(51L, parser.getEverything().value());
+
+		protobuf = Omnibus.newBuilder()
+				.setFloatUnique(52.3f)
+				.build()
+				.toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(Everything.FLOAT, parser.getEverything().kind());
+		assertEquals(52.3f, parser.getEverything().value());
+
+		protobuf = Omnibus.newBuilder()
+				.setDoubleUnique(54.5)
+				.build()
+				.toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(Everything.DOUBLE, parser.getEverything().kind());
+		assertEquals(54.5, parser.getEverything().value());
+
+		protobuf = Omnibus.newBuilder()
+				.setMemoUnique("Learn BASIC Now!")
+				.build()
+				.toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(Everything.MEMO, parser.getEverything().kind());
+		assertEquals("Learn BASIC Now!", parser.getEverything().value());
+
+		protobuf = Omnibus.newBuilder()
+				.setRandomBytesUnique(ByteString.copyFrom(new byte[]{(byte) 55, (byte) 56}))
+				.build()
+				.toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(Everything.RANDOM_BYTES, parser.getEverything().kind());
+		assertArrayEquals(new byte[]{(byte) 55, (byte) 56}, parser.getEverything().as());
+
+		protobuf = Omnibus.newBuilder()
+				.setNestedUnique(Nested.newBuilder().setNestedMemo("Reminder").build())
+				.build()
+				.toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(Everything.NESTED, parser.getEverything().kind());
+		assertEquals(new protoparser.model.Nested("Reminder"), parser.getEverything().value());
 	}
 
 }

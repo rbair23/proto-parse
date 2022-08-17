@@ -9,10 +9,6 @@ b
 2src/test/java/protoparser/parsers/FruitParser.java,5/f/5f98af02b97903fd10335da166a4ecbbd06d8d42
 c
 3src/test/java/protoparser/parsers/NestedParser.java,0/9/0952f54bda78ea33c6a12e0e1fe006b7ce5ed971
-Z
-*src/test/java/protoparser/model/Apple.java,c/3/c397168e2c0fdd88190060a060dd49c3b6e053ed
-[
-+src/test/java/protoparser/model/Banana.java,5/d/5dd929aec73638dc384c4b86271dda1c215f6b7c
 [
 +src/test/java/protoparser/model/Nested.java,f/5/f509f4704f6a038039c6bf9f1aea8442d820827a
 Y
