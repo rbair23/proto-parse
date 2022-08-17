@@ -15,5 +15,7 @@ public enum FieldType {
 	SFIXED_64,
 	BOOLEAN,
 	STRING,
-	BYTES
+	BYTES,
+	ENUM,
+	MESSAGE
 }

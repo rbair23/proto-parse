@@ -21,10 +21,11 @@ import java.util.concurrent.TimeUnit;
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 public class ParserBench {
 	private final byte[] protobuf = Timestamp.newBuilder().setNanos(1234).setSeconds(5678L).build().toByteArray();
+	private final TimestampParser parser = new TimestampParser();
 
 	@Benchmark
 	public void parseTimestamp(Blackhole blackhole) throws MalformedProtobufException {
-		blackhole.consume(TimestampParser.parse(protobuf));
+		blackhole.consume(parser.parse(protobuf));
 	}
 
 	@Benchmark

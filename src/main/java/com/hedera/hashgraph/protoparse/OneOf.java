@@ -6,7 +6,7 @@ public class OneOf<T> {
 	private int fieldNum;
 	private T value;
 
-	OneOf(byte[] bytes, int fieldNum) {
+	public OneOf(byte[] bytes, int fieldNum) {
 		this.bytes = bytes;
 		this.fieldNum = fieldNum;
 	}

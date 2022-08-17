@@ -1,5 +1,7 @@
 package com.hedera.hashgraph.protoparse;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public interface ParseListener {
@@ -15,7 +17,7 @@ public interface ParseListener {
 
 	}
 
-	default void enumField(int fieldNum, Object enumValue) {
+	default void enumField(int fieldNum, int ordinal) {
 
 	}
 
@@ -27,11 +29,15 @@ public interface ParseListener {
 
 	}
 
+	default void objectField(int fieldNum, long length, InputStream protoStream) throws IOException {
+		protoStream.skipNBytes(length);
+	}
+
 	default void stringField(int fieldNum, String value) {
 
 	}
 
-	default void byteField(int fieldNum, byte[] value) {
+	default void bytesField(int fieldNum, byte[] value) {
 
 	}
 

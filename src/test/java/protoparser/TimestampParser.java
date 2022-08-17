@@ -12,17 +12,11 @@ public class TimestampParser extends ProtoParser {
 	private long seconds;
 	private int nanos;
 
-	private TimestampParser(final byte[] protobuf) {
-		super(protobuf);
-	}
-
-	private Timestamp parse() throws MalformedProtobufException {
-		super.start();
+	public Timestamp parse(byte[] protobuf) throws MalformedProtobufException {
+		seconds = 0;
+		nanos = 0;
+		super.start(protobuf);
 		return new Timestamp(seconds, nanos);
-	}
-
-	public static Timestamp parse(final byte[] protobuf) throws MalformedProtobufException {
-		return new TimestampParser(protobuf).parse();
 	}
 
 	@Override

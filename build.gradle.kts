@@ -2,6 +2,7 @@ plugins {
     java
     `maven-publish`
     id("me.champeau.jmh") version "0.6.6"
+    id("com.google.protobuf") version "0.8.19"
 }
 
 group = "com.hedera.hashgraph.protoparse"
@@ -14,8 +15,11 @@ repositories {
 
 dependencies {
     jmhImplementation("com.hedera.hashgraph:sdk:2.17.0")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+    testImplementation("com.google.protobuf:protobuf-java:3.21.5")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
+
 }
 
 tasks.getByName<Test>("test") {
