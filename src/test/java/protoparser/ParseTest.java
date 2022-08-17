@@ -1,12 +1,16 @@
 package protoparser;
 
 import com.google.protobuf.ByteString;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import protoparser.model.Suit;
 import protoparser.parsers.OmnibusParser;
+import test.proto.Nested;
 
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ParseTest {
@@ -193,14 +197,35 @@ class ParseTest {
 		assertEquals(val, parser.getMemo());
 	}
 
-	@Test
-	void parseByteArraysOnly() throws Exception {
-//		final var protobuf = test.proto.Omnibus.newBuilder()
-//				.setRandomBytes(val)
-//				.build()
-//				.toByteArray();
-//
-//		parser.parse(protobuf);
-//		assertEquals(val, parser.getMemo());
+	static Stream<byte[]> byteArrays() {
+		return Stream.of(
+				new byte[0],
+				new byte[]{0b001},
+				new byte[]{0b001, 0b010, 0b011});
 	}
+
+	@ParameterizedTest
+	@MethodSource("byteArrays")
+	void parseByteArraysOnly(byte[] val) throws Exception {
+		final var protobuf = test.proto.Omnibus.newBuilder()
+				.setRandomBytes(ByteString.copyFrom(val))
+				.build()
+				.toByteArray();
+
+		parser.parse(protobuf);
+		assertArrayEquals(val, parser.getRandomBytes());
+	}
+
+	@ParameterizedTest
+	@ValueSource(strings = {"", "", ""})
+	void parseNestedObjectOnly(String nestedMemo) throws Exception {
+		final var protobuf = test.proto.Omnibus.newBuilder()
+				.setNested(Nested.newBuilder().setNestedMemo(nestedMemo))
+				.build()
+				.toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(new protoparser.model.Nested(nestedMemo), parser.getNested());
+	}
+
 }

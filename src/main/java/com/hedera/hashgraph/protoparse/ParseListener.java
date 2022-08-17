@@ -29,7 +29,7 @@ public interface ParseListener {
 
 	}
 
-	default void objectField(int fieldNum, long length, InputStream protoStream) throws IOException {
+	default void objectField(int fieldNum, long length, InputStream protoStream) throws IOException, MalformedProtobufException {
 		protoStream.skipNBytes(length);
 	}
 

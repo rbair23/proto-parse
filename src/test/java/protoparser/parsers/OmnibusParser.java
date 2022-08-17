@@ -1,16 +1,13 @@
 package protoparser.parsers;
 
-import com.hedera.hashgraph.protoparse.FieldDefinition;
-import com.hedera.hashgraph.protoparse.FieldType;
-import com.hedera.hashgraph.protoparse.MalformedProtobufException;
-import com.hedera.hashgraph.protoparse.OneOf;
-import com.hedera.hashgraph.protoparse.ProtoParser;
+import com.hedera.hashgraph.protoparse.*;
 import protoparser.model.Nested;
 import protoparser.model.Suit;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -287,7 +284,7 @@ public class OmnibusParser extends ProtoParser {
 		this.uint32Number = 0;
 		this.uint64Number = 0;
 		this.flag = false;
-		this.suitEnum = Suit.ACES;
+		this.suitEnum = Suit.ACES; // enums must have default of first enum (ordinal 0)
 
 		this.sint32Number = 0;
 		this.sint64Number = 0;
@@ -300,7 +297,7 @@ public class OmnibusParser extends ProtoParser {
 		this.doubleNumber = 0;
 
 		this.memo = "";
-		this.randomBytes = null;
+		this.randomBytes = new byte[0]; // arrays must have default of empty
 		this.nested = null;
 
 		this.fruit = null;
@@ -452,6 +449,22 @@ public class OmnibusParser extends ProtoParser {
 	public void stringField(final int fieldNum, final String value) {
 		switch (fieldNum) {
 			case 1 -> memo = value;
+			default -> throw new AssertionError("Not implemented in test code fieldNum='" + fieldNum + "'");
+		}
+	}
+
+	@Override
+	public void bytesField(int fieldNum, byte[] value) {
+		switch (fieldNum) {
+			case 2 -> randomBytes = Arrays.copyOf(value, value.length);
+			default -> throw new AssertionError("Not implemented in test code fieldNum='" + fieldNum + "'");
+		}
+	}
+
+	@Override
+	public void objectField(int fieldNum, long length, InputStream protoStream) throws IOException, MalformedProtobufException {
+		switch (fieldNum) {
+			case 3 -> nested = new NestedParser().parse(protoStream);
 			default -> throw new AssertionError("Not implemented in test code fieldNum='" + fieldNum + "'");
 		}
 	}
