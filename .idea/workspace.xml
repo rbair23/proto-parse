@@ -5,28 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5188fc4d-d373-4331-950f-2b686575846a" name="Changes" comment="A more complete implementation of a parser">
-      <change afterPath="$PROJECT_DIR$/src/test/java/protoparser/FuzzTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/protoparser/NegativeTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/protoparser/model/Apple.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/protoparser/model/Banana.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/protoparser/model/Nested.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/protoparser/model/Suit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/protoparser/parsers/AppleParser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/protoparser/parsers/BananaParser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/protoparser/parsers/FruitParser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/protoparser/parsers/NestedParser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/protoparser/parsers/OmnibusParser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/proto/omnibus.proto" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jmh/java/protoparse/ParserBench.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/protoparse/ParserBench.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jmh/java/protoparse/TimestampParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/protoparse/TimestampParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/FieldType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/FieldType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/OneOf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/OneOf.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/ParseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/ParseListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/ProtoParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/ProtoParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/ParseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/protoparser/ParseTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/TimestampParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/protoparser/TimestampParser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,6 +48,24 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="proto-parse" type="f1a62948:ProjectNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build setup" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="proto-parse" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="documentation" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="proto-parse" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="help" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="proto-parse" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="jmh" type="c8890929:TasksNode$1" />
               </path>
               <path>
@@ -79,6 +79,12 @@
                 <item name="proto-parse" type="f1a62948:ProjectNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="publishing" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="proto-parse" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="verification" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -106,10 +112,6 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="jar:///Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home/lib/src.zip!/java.base/java/io/InputStream.java" root0="SKIP_INSPECTION" />
-    <setting file="jar:///Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home/lib/src.zip!/java.base/java/nio/ByteBuffer.java" root0="SKIP_INSPECTION" />
-  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -118,30 +120,36 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.go.format.on.save.advertiser.fired&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/richardbair/IdeaProjects/proto-parse/src/jmh/java/protoparse&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;ics&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.format.on.save.advertiser.fired": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "go.import.settings.migrated": "true",
+    "last_opened_file_path": "/Users/richardbair/IdeaProjects/proto-parse/src/jmh/java/protoparse",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.language.Kotlin.scripting",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="protoparser.parsers" />
       <recent name="protoparser.model" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.ParseTest.parseStringOnly">
+  <component name="RunManager" selected="Gradle.proto-parse [build]">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="proto-parse" />
       <working_directory value="$PROJECT_DIR$" />
@@ -161,128 +169,118 @@
       <framework value="gotest" />
       <method v="2" />
     </configuration>
-    <configuration name="ParseTest.parseDoubleOnly" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="proto-parse [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
+        <option name="scriptParameters" />
         <option name="taskDescriptions">
           <list />
         </option>
         <option name="taskNames">
           <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;protoparser.ParseTest.parseDoubleOnly&quot;" />
+            <option value="build" />
           </list>
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="ParseTest.parseFixed32Only" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="proto-parse [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
+        <option name="scriptParameters" />
         <option name="taskDescriptions">
           <list />
         </option>
         <option name="taskNames">
           <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;protoparser.ParseTest.parseFixed32Only&quot;" />
+            <option value="clean" />
           </list>
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="ParseTest.parseFixed64Only" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="proto-parse [generateProto]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
+        <option name="scriptParameters" />
         <option name="taskDescriptions">
           <list />
         </option>
         <option name="taskNames">
           <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;protoparser.ParseTest.parseFixed64Only&quot;" />
+            <option value="generateProto" />
           </list>
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="ParseTest.parseFloatOnly" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="proto-parse [generateTestProto]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
+        <option name="scriptParameters" />
         <option name="taskDescriptions">
           <list />
         </option>
         <option name="taskNames">
           <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;protoparser.ParseTest.parseFloatOnly&quot;" />
+            <option value="generateTestProto" />
           </list>
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="ParseTest.parseStringOnly" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="proto-parse [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
+        <option name="scriptParameters" />
         <option name="taskDescriptions">
           <list />
         </option>
         <option name="taskNames">
           <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;protoparser.ParseTest.parseStringOnly&quot;" />
+            <option value="test" />
           </list>
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.ParseTest.parseStringOnly" />
-        <item itemvalue="Gradle.ParseTest.parseDoubleOnly" />
-        <item itemvalue="Gradle.ParseTest.parseFloatOnly" />
-        <item itemvalue="Gradle.ParseTest.parseFixed64Only" />
-        <item itemvalue="Gradle.ParseTest.parseFixed32Only" />
+        <item itemvalue="Gradle.proto-parse [build]" />
+        <item itemvalue="Gradle.proto-parse [test]" />
+        <item itemvalue="Gradle.proto-parse [generateTestProto]" />
+        <item itemvalue="Gradle.proto-parse [generateProto]" />
+        <item itemvalue="Gradle.proto-parse [clean]" />
       </list>
     </recent_temporary>
   </component>
@@ -298,6 +296,8 @@
       <workItem from="1660089919245" duration="59000" />
       <workItem from="1660090287401" duration="49935000" />
       <workItem from="1660698357040" duration="2372000" />
+      <workItem from="1660708858898" duration="1905000" />
+      <workItem from="1660711194811" duration="4486000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1660158953075</created>
@@ -330,5 +330,9 @@
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
