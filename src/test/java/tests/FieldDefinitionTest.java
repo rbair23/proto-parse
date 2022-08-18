@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class FieldDefinitionTest {
+class FieldDefinitionTest {
     @Test
     void nullNameThrows() {
         assertThrows(NullPointerException.class, () -> {

@@ -1,17 +1,11 @@
 package com.hedera.hashgraph.protoparse;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 
 // A protobuf builder. How does it work? Nobody knows!
 public abstract class ProtoBuilder {
-    private static final int WIRE_TYPE_VARINT_OR_ZIGZAG = 0;
-    private static final int WIRE_TYPE_FIXED_64_BIT = 1;
     private static final int WIRE_TYPE_DELIMITED = 2;
-    private static final int WIRE_TYPE_GROUP_START = 3;
-    private static final int WIRE_TYPE_GROUP_END = 4;
-    private static final int WIRE_TYPE_FIXED_32_BIT = 5;
 
     // I kind of want to use a normal builder pattern for this, but the protobuf bytes are
     // written out as you call the various "write" methods... so you can stream it out
@@ -54,7 +48,7 @@ public abstract class ProtoBuilder {
 
     }
 
-    protected void writeString(FieldDefinition f, String value) throws IOException {
+    protected void writeString(FieldDefinition f, String value) {
         // Intentionally throw NPE if value is null (or field)
         if (value.length() > 0) {
             final int tag = (f.number() << 3) | WIRE_TYPE_DELIMITED;

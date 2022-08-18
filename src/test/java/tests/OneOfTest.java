@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class OneOfTest {
+class OneOfTest {
     @Test
     void nullNameIsOK() {
         final var oneOf = new OneOf<>(1, TestEnum.KIND1, null);

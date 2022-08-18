@@ -10,7 +10,7 @@ import java.io.ByteArrayOutputStream;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class BuilderTest {
+class BuilderTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "A String", "I need some HBAR to run work on Hedera!", "I need some ℏ to run work on Hedera!"})
     void buildStringOnly(String val) throws Exception {

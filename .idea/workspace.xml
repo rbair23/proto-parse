@@ -4,39 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5188fc4d-d373-4331-950f-2b686575846a" name="Changes" comment="Add docs and tests for OneOf">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/ProtoBuilder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/sample/target/model/Fruits.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/sample/target/model/Omnibus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/sample/target/proto/builders/AppleBuilder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/sample/target/proto/schemas/AppleSchema.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/sample/target/proto/schemas/BananaSchema.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/sample/target/proto/schemas/FruitsSchema.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/sample/target/proto/schemas/NestedSchema.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/sample/target/proto/schemas/OmnibusSchema.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/tests/BuilderTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+    <list default="true" id="5188fc4d-d373-4331-950f-2b686575846a" name="Changes" comment="Some refactoring to normalize the examples">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jmh/java/protoparse/TimestampParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/protoparse/TimestampParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/FieldDefinitionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/FieldDefinitionTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/FuzzTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/FuzzTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/NegativeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/NegativeTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/OneOfTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/OneOfTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/ParseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/ParseTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/Timestamp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/Timestamp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/TimestampParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/TimestampParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/model/Apple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/sample/target/model/Apple.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/model/Banana.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/sample/target/model/Banana.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/model/Everything.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/model/Fruit.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/model/Nested.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/sample/target/model/Nested.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/model/Suit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/sample/target/model/Suit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/parsers/AppleParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/sample/target/proto/parsers/AppleParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/parsers/BananaParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/sample/target/proto/parsers/BananaParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/parsers/FruitParser.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/parsers/FruitsParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/sample/target/proto/parsers/FruitsParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/parsers/NestedParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/sample/target/proto/parsers/NestedParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/parsers/OmnibusParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/sample/target/proto/parsers/OmnibusParser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -305,7 +274,7 @@
       <workItem from="1660708858898" duration="1905000" />
       <workItem from="1660711194811" duration="5420000" />
       <workItem from="1660745856675" duration="23103000" />
-      <workItem from="1660836969045" duration="1496000" />
+      <workItem from="1660836969045" duration="3312000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1660158953075</created>
@@ -370,7 +339,14 @@
       <option name="project" value="LOCAL" />
       <updated>1660790313659</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Some refactoring to normalize the examples">
+      <created>1660839087432</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1660839087432</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -398,7 +374,8 @@
     <MESSAGE value="Support all kinds of lists." />
     <MESSAGE value="Add docs and tests for FieldDefinition" />
     <MESSAGE value="Add docs and tests for OneOf" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add docs and tests for OneOf" />
+    <MESSAGE value="Some refactoring to normalize the examples" />
+    <option name="LAST_COMMIT_MESSAGE" value="Some refactoring to normalize the examples" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
