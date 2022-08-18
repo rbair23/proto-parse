@@ -1,5 +1,8 @@
 package com.hedera.hashgraph.protoparse;
 
+/**
+ * Enumeration of possible types of fields.
+ */
 public enum FieldType {
 	DOUBLE,
 	FLOAT,

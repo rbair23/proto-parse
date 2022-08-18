@@ -13,7 +13,3 @@ X
 .src/test/java/protoparser/TimestampParser.java,d/7/d700182163f1479c7d21e4539dea3ada8b2f0851
 W
 'src/test/java/protoparser/FuzzTest.java,1/6/161a229062163f6cafb8d9d55254740e03d20137
-l
-<src/main/java/com/hedera/hashgraph/protoparse/FieldType.java,c/9/c9e66ec7ddf64aeaff1ed9ab5fc415f61298449e
-}
-Msrc/main/java/com/hedera/hashgraph/protoparse/MalformedProtobufException.java,7/1/71599831b212c9eb79eeeba74869c1d1946359db

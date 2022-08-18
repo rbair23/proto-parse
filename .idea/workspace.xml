@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5188fc4d-d373-4331-950f-2b686575846a" name="Changes" comment="Support all kinds of lists.">
-      <change afterPath="$PROJECT_DIR$/src/test/java/protoparser/FieldDefinitionTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/FieldDefinition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/FieldDefinition.java" afterDir="false" />
+    <list default="true" id="5188fc4d-d373-4331-950f-2b686575846a" name="Changes" comment="Add docs and tests for FieldDefinition">
+      <change afterPath="$PROJECT_DIR$/src/test/java/protoparser/OneOfTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/FieldType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/FieldType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/MalformedProtobufException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/MalformedProtobufException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/OneOf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/OneOf.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,11 +152,12 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="protoparser" />
       <recent name="protoparser.parsers" />
       <recent name="protoparser.model" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.ParseTest.parseFruitListOnly">
+  <component name="RunManager" selected="Gradle.FieldDefinitionTest">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="proto-parse" />
       <working_directory value="$PROJECT_DIR$" />
@@ -176,6 +177,29 @@
       <framework value="gotest" />
       <method v="2" />
     </configuration>
+    <configuration name="FieldDefinitionTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;protoparser.FieldDefinitionTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="ParseTest.parseBytesListOnly" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -190,29 +214,6 @@
             <option value=":test" />
             <option value="--tests" />
             <option value="&quot;protoparser.ParseTest.parseBytesListOnly&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="ParseTest.parseEnumListOnly" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;protoparser.ParseTest.parseEnumListOnly&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -293,11 +294,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.FieldDefinitionTest" />
         <item itemvalue="Gradle.ParseTest.parseFruitListOnly" />
         <item itemvalue="Gradle.ParseTest.parseNestedListOnly" />
         <item itemvalue="Gradle.ParseTest.parseBytesListOnly" />
         <item itemvalue="Gradle.ParseTest.parseStringListOnly" />
-        <item itemvalue="Gradle.ParseTest.parseEnumListOnly" />
       </list>
     </recent_temporary>
   </component>
@@ -315,7 +316,7 @@
       <workItem from="1660698357040" duration="2372000" />
       <workItem from="1660708858898" duration="1905000" />
       <workItem from="1660711194811" duration="5420000" />
-      <workItem from="1660745856675" duration="19108000" />
+      <workItem from="1660745856675" duration="19741000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1660158953075</created>
@@ -366,7 +367,14 @@
       <option name="project" value="LOCAL" />
       <updated>1660786007954</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Add docs and tests for FieldDefinition">
+      <created>1660789695071</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1660789695071</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -392,7 +400,8 @@
     <MESSAGE value="Update OneOf and implement tests for OneOf" />
     <MESSAGE value="Support most lists of things" />
     <MESSAGE value="Support all kinds of lists." />
-    <option name="LAST_COMMIT_MESSAGE" value="Support all kinds of lists." />
+    <MESSAGE value="Add docs and tests for FieldDefinition" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add docs and tests for FieldDefinition" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
