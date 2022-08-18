@@ -9,10 +9,7 @@ import protoparser.model.Suit;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class OmnibusParser extends ProtoParser {
 	private static final FieldDefinition INT32_NUMBER = new FieldDefinition("int32Number", FieldType.INT_32, false, 10);
@@ -112,11 +109,11 @@ public class OmnibusParser extends ProtoParser {
 	private List<Float> floatNumberList = Collections.emptyList();
 	private List<Double> doubleNumberList = Collections.emptyList();
 
-	private List<String> memoList = Collections.emptyList();
-	private List<byte[]> randomBytesList = Collections.emptyList();
-	private List<Nested> nestedList = Collections.emptyList();
+	private List<String> memoList = null;
+	private List<byte[]> randomBytesList = null;
+	private List<Nested> nestedList = null;
 
-	private List<OneOf<Fruit, Object>> fruitList = Collections.emptyList(); // Apple or Banana
+	private List<Object> fruitList = null; // Apple or Banana
 
 	public int getInt32Number() {
 		return int32Number;
@@ -251,19 +248,19 @@ public class OmnibusParser extends ProtoParser {
 	}
 
 	public List<String> getMemoList() {
-		return memoList;
+		return memoList == null ? Collections.emptyList() : memoList;
 	}
 
 	public List<byte[]> getRandomBytesList() {
-		return randomBytesList;
+		return randomBytesList == null ? Collections.emptyList() : randomBytesList;
 	}
 
 	public List<Nested> getNestedList() {
-		return nestedList;
+		return nestedList == null ? Collections.emptyList() : nestedList;
 	}
 
-	public List<OneOf<Fruit, Object>> getFruitList() {
-		return fruitList;
+	public List<Object> getFruitList() {
+		return fruitList == null ? Collections.emptyList() : fruitList;
 	}
 
 	public void parse(byte[] protobuf) throws MalformedProtobufException {
@@ -324,11 +321,11 @@ public class OmnibusParser extends ProtoParser {
 		this.floatNumberList = new LinkedList<>();
 		this.doubleNumberList = new LinkedList<>();
 
-		this.memoList = new LinkedList<>();
-		this.randomBytesList = new LinkedList<>();
-		this.nestedList = new LinkedList<>();
+		this.memoList = null;
+		this.randomBytesList = null;
+		this.nestedList = null;
 
-		this.fruitList = new LinkedList<>(); // Apple or Banana
+		this.fruitList = null; // Apple or Banana
 	}
 
 	@Override
@@ -467,6 +464,12 @@ public class OmnibusParser extends ProtoParser {
 		switch (fieldNum) {
 			case 1 -> memo = value;
 			case 251 -> everything = new OneOf<>(fieldNum, Everything.MEMO, value);
+			case 314 -> {
+				if (memoList == null) {
+					memoList = new ArrayList<>();
+				}
+				memoList.add(value);
+			}
 			default -> throw new AssertionError("Not implemented in test code fieldNum='" + fieldNum + "'");
 		}
 	}
@@ -476,17 +479,36 @@ public class OmnibusParser extends ProtoParser {
 		switch (fieldNum) {
 			case 2 -> randomBytes = Arrays.copyOf(value, value.length);
 			case 252 -> everything = new OneOf<>(fieldNum, Everything.RANDOM_BYTES, Arrays.copyOf(value, value.length));
+			case 315 -> {
+				if (randomBytesList == null) {
+					randomBytesList = new ArrayList<>();
+				}
+				randomBytesList.add(Arrays.copyOf(value, value.length));
+			}
 			default -> throw new AssertionError("Not implemented in test code fieldNum='" + fieldNum + "'");
 		}
 	}
 
 	@Override
-	public void objectField(int fieldNum, long length, InputStream protoStream) throws IOException, MalformedProtobufException {
+	public void objectField(int fieldNum, InputStream protoStream) throws IOException, MalformedProtobufException {
 		switch (fieldNum) {
 			case 3 -> nested = new NestedParser().parse(protoStream);
 			case 200 -> fruit = new OneOf<>(fieldNum, Fruit.APPLE, new AppleParser().parse(protoStream));
 			case 201 -> fruit = new OneOf<>(fieldNum, Fruit.BANANA, new BananaParser().parse(protoStream));
 			case 253 -> everything = new OneOf<>(fieldNum, Everything.NESTED, new NestedParser().parse(protoStream));
+			case 316 -> {
+				if (nestedList == null) {
+					nestedList = new ArrayList<>();
+				}
+				// TODO ProtoStream needs to know what the length is so it can stop parsing when it gets to the end...
+				nestedList.add(new NestedParser().parse(protoStream));
+			}
+			case 317 -> {
+				if (fruitList == null) {
+					fruitList = new ArrayList<>();
+				}
+				fruitList.add(new FruitsParser().parse(protoStream));
+			}
 			default -> throw new AssertionError("Not implemented in test code fieldNum='" + fieldNum + "'");
 		}
 	}
@@ -524,30 +546,11 @@ public class OmnibusParser extends ProtoParser {
 	}
 
 	@Override
-	public void stringList(int fieldNum, List<String> value) {
+	public void enumList(final int fieldNum, final List<Integer> ordinals) {
 		switch (fieldNum) {
-			case 314 -> memoList = value;
+			case 305 -> suitEnumList = ordinals.stream().map(Suit::fromOrdinal).toList();
 			default -> throw new AssertionError("Not implemented in test code fieldNum='" + fieldNum + "'");
 		}
 	}
-
-	@Override
-	public void bytesList(int fieldNum, List<byte[]> value) {
-		switch (fieldNum) {
-			case 315 -> randomBytesList = value;
-			default -> throw new AssertionError("Not implemented in test code fieldNum='" + fieldNum + "'");
-		}
-	}
-
-//	@Override
-//	public void objectList(int fieldNum, long length, InputStream protoStream) throws IOException, MalformedProtobufException {
-//		switch (fieldNum) {
-//			case 3 -> nested = new NestedParser().parse(protoStream);
-//			case 200 -> fruit = new OneOf<>(fieldNum, Fruit.APPLE, new AppleParser().parse(protoStream));
-//			case 201 -> fruit = new OneOf<>(fieldNum, Fruit.BANANA, new BananaParser().parse(protoStream));
-//			case 253 -> everything = new OneOf<>(fieldNum, Everything.NESTED, new NestedParser().parse(protoStream));
-//			default -> throw new AssertionError("Not implemented in test code fieldNum='" + fieldNum + "'");
-//		}
-//	}
 
 }

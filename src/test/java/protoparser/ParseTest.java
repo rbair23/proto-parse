@@ -9,10 +9,7 @@ import protoparser.model.Everything;
 import protoparser.model.Fruit;
 import protoparser.model.Suit;
 import protoparser.parsers.OmnibusParser;
-import test.proto.Apple;
-import test.proto.Banana;
-import test.proto.Nested;
-import test.proto.Omnibus;
+import test.proto.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -451,21 +448,6 @@ class ParseTest {
 				List.of(0L, 1L, 2L, Long.MAX_VALUE));
 	}
 
-	static Stream<List<Boolean>> boolList() {
-		return Stream.of(
-				Collections.emptyList(),
-				List.of(false, false, true),
-				List.of(true, false, true, true, false, true, false, false, false, true));
-	}
-
-	static Stream<List<Suit>> suitList() {
-		return Stream.of(
-				Collections.emptyList(),
-				List.of(Suit.ACES, Suit.CLUBS, Suit.DIAMONDS, Suit.SPADES),
-				// TODO add more, just for good measure
-				List.of(Suit.ACES, Suit.ACES, Suit.DIAMONDS, Suit.ACES));
-	}
-
 	@ParameterizedTest
 	@MethodSource("intList")
 	void parseInt32ListOnly(List<Integer> list) throws Exception {
@@ -596,6 +578,13 @@ class ParseTest {
 		assertEquals(list, parser.getFixed64NumberList());
 	}
 
+	static Stream<List<Boolean>> boolList() {
+		return Stream.of(
+				Collections.emptyList(),
+				List.of(false, false, true),
+				List.of(true, false, true, true, false, true, false, false, false, true));
+	}
+
 	@ParameterizedTest
 	@MethodSource("boolList")
 	void parseBooleanListOnly(List<Boolean> list) throws Exception {
@@ -609,40 +598,132 @@ class ParseTest {
 		assertEquals(list, parser.getFlagList());
 	}
 
+	static Stream<List<Suit>> suitList() {
+		return Stream.of(
+				Collections.emptyList(),
+				List.of(Suit.ACES, Suit.CLUBS, Suit.DIAMONDS, Suit.SPADES),
+				// TODO add more, just for good measure
+				List.of(Suit.ACES, Suit.ACES, Suit.DIAMONDS, Suit.ACES));
+	}
+
+	static Stream<List<String>> stringList() {
+		return Stream.of(
+				Collections.emptyList(),
+				List.of("first", "third"),
+				List.of("I", "have", "a", "joke", ",", "Who's", "on", "first?"));
+	}
+
+	// Also need object test and one-of test
+	static Stream<List<protoparser.model.Nested>> nestedList() {
+		return Stream.of(
+				Collections.emptyList(),
+				List.of(new protoparser.model.Nested("Bob"),
+						new protoparser.model.Nested("Sue")),
+				List.of(new protoparser.model.Nested("Bob"),
+						new protoparser.model.Nested("Bob"),
+						new protoparser.model.Nested("Fred"),
+						new protoparser.model.Nested("Sally")));
+	}
+
+	static Stream<List<byte[]>> byteList() {
+		return Stream.of(
+				Collections.emptyList(),
+				List.of("What".getBytes(), "Is".getBytes()),
+				List.of("This".getBytes(), "Gonna".getBytes(), "Do?".getBytes()));
+	}
+
+	static Stream<List<Object>> fruitList() {
+		return Stream.of(
+				Collections.emptyList(),
+				List.of(new protoparser.model.Apple("Gala"),
+						new protoparser.model.Banana("Yellow")),
+				List.of(new protoparser.model.Apple("Gala"),
+						new protoparser.model.Banana("Yellow"),
+						new protoparser.model.Banana("Short"),
+						new protoparser.model.Apple("Honey Crisp"),
+						new protoparser.model.Banana("Green")));
+	}
+
 	@ParameterizedTest
 	@MethodSource("suitList")
 	void parseEnumListOnly(List<Suit> list) throws Exception {
-//		final var protobufBuilder = test.proto.Omnibus.newBuilder();
-//		for (int i=0; i<list.size(); i++) {
-//			protobufBuilder.addFlagList(list.get(i));
-//		}
-//		final var protobuf = protobufBuilder.build().toByteArray();
-//
-//		parser.parse(protobuf);
-//		assertEquals(list, parser.getFlagList());
+		final var protobufBuilder = test.proto.Omnibus.newBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			protobufBuilder.addSuitEnumListValue(list.get(i).ordinal());
+		}
+		final var protobuf = protobufBuilder.build().toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(list, parser.getSuitEnumList());
 	}
 
-//	static Stream<List<String>> stringList() {
-//		return Stream.of(
-//				Collections.emptyList(),
-//				List.of("first", "third"),
-//				List.of("I", "have", "a", "joke", ",", "Who's", "on", "first?"));
-//	}
-//
-//	@ParameterizedTest
-//	@MethodSource("stringList")
-//	void parseStringListOnly(List<String> list) throws Exception {
-//		final var protobufBuilder = test.proto.Omnibus.newBuilder();
-//		for (int i=0; i<list.size(); i++) {
-//			protobufBuilder.addMemoList(list.get(i));
-//		}
-//		final var protobuf = protobufBuilder.build().toByteArray();
-//
-//		parser.parse(protobuf);
-//		assertEquals(list, parser.getMemoList());
-//	}
+	@ParameterizedTest
+	@MethodSource("stringList")
+	void parseStringListOnly(List<String> list) throws Exception {
+		final var protobufBuilder = test.proto.Omnibus.newBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			protobufBuilder.addMemoList(list.get(i));
+		}
+		final var protobuf = protobufBuilder.build().toByteArray();
 
-	// Also need object test and one-of test
+		parser.parse(protobuf);
+		assertEquals(list, parser.getMemoList());
+	}
 
+	@ParameterizedTest
+	@MethodSource("nestedList")
+	void parseNestedListOnly(List<protoparser.model.Nested> list) throws Exception {
+		final var protobufBuilder = test.proto.Omnibus.newBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			protobufBuilder.addNestedList(Nested.newBuilder().setNestedMemo(list.get(i).nestedMemo()));
+		}
+		final var protobuf = protobufBuilder.build().toByteArray();
 
+		parser.parse(protobuf);
+		assertEquals(list, parser.getNestedList());
+	}
+
+	@ParameterizedTest
+	@MethodSource("byteList")
+	void parseBytesListOnly(List<byte[]> list) throws Exception {
+		final var protobufBuilder = test.proto.Omnibus.newBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			protobufBuilder.addRandomBytesList(ByteString.copyFrom(list.get(i)));
+		}
+		final var protobuf = protobufBuilder.build().toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(list.size(), parser.getRandomBytesList().size());
+		for (int i = 0; i < list.size(); i++) {
+			assertArrayEquals(list.get(i), parser.getRandomBytesList().get(i));
+		}
+	}
+
+	@ParameterizedTest
+	@MethodSource("fruitList")
+	void parseFruitListOnly(List<Object> list) throws Exception {
+		final var protobufBuilder = test.proto.Omnibus.newBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			final var fruit = list.get(i);
+			if (fruit instanceof protoparser.model.Apple) {
+				protobufBuilder.addFruitsList(
+						Fruits.newBuilder().setApple(
+								Apple.newBuilder().setVariety(((protoparser.model.Apple) fruit).variety())
+										.build()));
+			} else if (fruit instanceof protoparser.model.Banana) {
+				protobufBuilder.addFruitsList(
+						Fruits.newBuilder().setBanana(
+								Banana.newBuilder().setVariety(((protoparser.model.Banana) fruit).variety())
+										.build()));
+			}
+
+		}
+		final var protobuf = protobufBuilder.build().toByteArray();
+
+		parser.parse(protobuf);
+		assertEquals(list.size(), parser.getFruitList().size());
+		for (int i = 0; i < list.size(); i++) {
+			assertEquals(list.get(i), parser.getFruitList().get(i));
+		}
+	}
 }

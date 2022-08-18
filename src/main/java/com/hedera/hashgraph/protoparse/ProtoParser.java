@@ -233,7 +233,7 @@ public abstract class ProtoParser implements ParseListener {
 					case SFIXED_64 -> handleSfixed64(field, f);
 					case FIXED_64 -> handleFixed64(field, f);
 					case DOUBLE -> handleDouble(field, f);
-					case MESSAGE -> objectField(field, protoStream.readLengthFromStream(), protoStream);
+					case MESSAGE -> handleMessage(field, f);
 					case STRING -> handleString(field, f);
 					case BYTES -> handleBytes(field, f);
 					default -> {
@@ -367,39 +367,51 @@ public abstract class ProtoParser implements ParseListener {
 
 	private void handleEnum(int field, FieldDefinition f) throws MalformedProtobufException, IOException {
 		if (f.repeated()) {
-//			enumList(field, readList(f, protoStream::readBool));
-			throw new AssertionError("WOW");
+			enumList(field, readList(f, protoStream::readEnum));
 		} else {
 			enumField(field, protoStream.readEnum(f.name()));
 		}
 	}
 
 	private void handleString(int field, FieldDefinition f) throws MalformedProtobufException, IOException {
-		if (f.repeated()) {
-			stringList(field, readList(f, protoStream::readString));
-		} else {
-			stringField(field, protoStream.readString(f.name()));
-		}
+		stringField(field, protoStream.readString(f.name()));
 	}
 
 	private void handleBytes(int field, FieldDefinition f) throws MalformedProtobufException, IOException {
-		if (f.repeated()) {
-			bytesList(field, readList(f, protoStream::readBytes));
-		} else {
-			bytesField(field, protoStream.readBytes(f.name()));
+		bytesField(field, protoStream.readBytes(f.name()));
+	}
+
+	private void handleMessage(int field, FieldDefinition f) throws MalformedProtobufException, IOException {
+		final var nestedStream = new LimitedStream(protoStream, (int) protoStream.readLengthFromStream());
+		objectField(field, nestedStream);
+		if (nestedStream.totalBytesRead < nestedStream.maxBytesToRead) {
+			protoStream.skipNBytes(nestedStream.maxBytesToRead - nestedStream.totalBytesRead);
 		}
 	}
 
-//	private void handleMessage(int field, FieldDefinition f) throws MalformedProtobufException, IOException {
-//		if (f.repeated()) {
-//			booleanList(field, readList(f, protoStream::readBool));
-//		} else {
-//			booleanField(field, protoStream.readBool(f.name()));
-//		}
-//	}
-
 	private interface ReadFunction<T> {
 		public T apply(String fieldName) throws MalformedProtobufException, IOException;
+	}
+
+	private static final class LimitedStream extends InputStream {
+		private final InputStream stream;
+		private final int maxBytesToRead;
+		private int totalBytesRead = 0;
+
+		public LimitedStream(InputStream in, int limit) {
+			this.maxBytesToRead = limit;
+			this.stream = in;
+		}
+
+		@Override
+		public int read() throws IOException {
+			if (totalBytesRead >= maxBytesToRead) {
+				return -1;
+			}
+			int b = stream.read();
+			totalBytesRead++;
+			return b;
+		}
 	}
 
 	private static final class ProtoStream extends InputStream {

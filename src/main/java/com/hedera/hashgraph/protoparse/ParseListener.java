@@ -29,8 +29,7 @@ public interface ParseListener {
 
 	}
 
-	default void objectField(int fieldNum, long length, InputStream protoStream) throws IOException, MalformedProtobufException {
-		protoStream.skipNBytes(length);
+	default void objectField(int fieldNum, InputStream protoStream) throws IOException, MalformedProtobufException {
 	}
 
 	default void stringField(int fieldNum, String value) {
@@ -61,15 +60,7 @@ public interface ParseListener {
 
 	}
 
-	default void stringList(int fieldNum, List<String> value) {
-
-	}
-
-	default void bytesList(int fieldNum, List<byte[]> value) {
-
-	}
-
-	default void objectList(int fieldNum, List<Object> value) {
+	default void enumList(int fieldNum, List<Integer> value) {
 
 	}
 }
