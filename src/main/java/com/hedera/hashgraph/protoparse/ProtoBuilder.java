@@ -53,9 +53,8 @@ public abstract class ProtoBuilder {
         if (value.length() > 0) {
             final int tag = (f.number() << 3) | WIRE_TYPE_DELIMITED;
             buffer.writeByte(tag);
-            // TODO Need to have an implementation of varint production... booo.
             final byte[] data = value.getBytes(StandardCharsets.UTF_8);
-            buffer.writeByte(data.length);
+            buffer.writeVarint(data.length);
             for (int i = 0; i < data.length; i++) {
                 buffer.writeByte(data[i]);
             }
@@ -88,6 +87,37 @@ public abstract class ProtoBuilder {
                 offset = 0;
                 currentBuffer = new byte[4096];
             }
+        }
+
+        private void writeVarint(long value) {
+            // We never write a varint with length 0.
+            // TODO This needs to be validated.
+            if (value == 0) {
+                return;
+            }
+
+            // We will send 7 bits of data with each byte we write. The high-order bit of
+            // each byte indicates whether there are subsequent bytes coming. So we need
+            // to know how many bytes we need to send. We do this by figuring out the position
+            // of the highest set bit (counting from the left. So the first bit on the far
+            // right is at position 1, the bit at the far left is at position 64).
+            // Then, we calculate how many bytes it will take if we are sending 7 bits at
+            // a time, being careful to round up when not aligned at a 7-bit boundary.
+            int numLeadingZeros = Long.numberOfLeadingZeros(value);
+            int bitPos = 64 - numLeadingZeros;
+            int numBytesToSend = bitPos / 7 + (bitPos % 7 == 0 ? 0 : 1);
+
+            // For all bytes except the last one, we need to mask off the last
+            // 7 bits of the value and combine that with a byte with the leading
+            // bit set. Then we shift the value 7 bits to the right.
+            for (int i = 0; i < numBytesToSend - 1; i++) {
+                writeByte((int) (0x80 | (0x7F & value)));
+                value >>= 7;
+            }
+
+            // And now we can send whatever is left as the last byte, knowing that
+            // the high order bit will never be set.
+            writeByte((int) value);
         }
 
         private byte[] toByteArray() {
