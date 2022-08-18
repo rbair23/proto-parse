@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5188fc4d-d373-4331-950f-2b686575846a" name="Changes" comment="Support most lists of things">
+    <list default="true" id="5188fc4d-d373-4331-950f-2b686575846a" name="Changes" comment="Support all kinds of lists.">
+      <change afterPath="$PROJECT_DIR$/src/test/java/protoparser/FieldDefinitionTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/NegativeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/protoparser/NegativeTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/model/Apple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/protoparser/model/Apple.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/FieldDefinition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/FieldDefinition.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,9 +97,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="Record" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -152,11 +152,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="protoparser.model" />
       <recent name="protoparser.parsers" />
+      <recent name="protoparser.model" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.proto-parse [publishMavenPublicationToMavenLocal]">
+  <component name="RunManager" selected="Gradle.ParseTest.parseFruitListOnly">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="proto-parse" />
       <working_directory value="$PROJECT_DIR$" />
@@ -176,7 +176,7 @@
       <framework value="gotest" />
       <method v="2" />
     </configuration>
-    <configuration name="ParseTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="ParseTest.parseBytesListOnly" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -189,7 +189,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;protoparser.ParseTest&quot;" />
+            <option value="&quot;protoparser.ParseTest.parseBytesListOnly&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -199,7 +199,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="ParseTest.parseBooleanListOnly" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="ParseTest.parseEnumListOnly" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -212,7 +212,53 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;protoparser.ParseTest.parseBooleanListOnly&quot;" />
+            <option value="&quot;protoparser.ParseTest.parseEnumListOnly&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="ParseTest.parseFruitListOnly" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;protoparser.ParseTest.parseFruitListOnly&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="ParseTest.parseNestedListOnly" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;protoparser.ParseTest.parseNestedListOnly&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -245,55 +291,13 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="proto-parse [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="proto-parse [publishMavenPublicationToMavenLocal]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="publishMavenPublicationToMavenLocal" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.proto-parse [publishMavenPublicationToMavenLocal]" />
-        <item itemvalue="Gradle.proto-parse [build]" />
-        <item itemvalue="Gradle.ParseTest" />
+        <item itemvalue="Gradle.ParseTest.parseFruitListOnly" />
+        <item itemvalue="Gradle.ParseTest.parseNestedListOnly" />
+        <item itemvalue="Gradle.ParseTest.parseBytesListOnly" />
         <item itemvalue="Gradle.ParseTest.parseStringListOnly" />
-        <item itemvalue="Gradle.ParseTest.parseBooleanListOnly" />
+        <item itemvalue="Gradle.ParseTest.parseEnumListOnly" />
       </list>
     </recent_temporary>
   </component>
@@ -311,7 +315,7 @@
       <workItem from="1660698357040" duration="2372000" />
       <workItem from="1660708858898" duration="1905000" />
       <workItem from="1660711194811" duration="5420000" />
-      <workItem from="1660745856675" duration="14981000" />
+      <workItem from="1660745856675" duration="19108000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1660158953075</created>
@@ -355,7 +359,14 @@
       <option name="project" value="LOCAL" />
       <updated>1660762587311</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Support all kinds of lists.">
+      <created>1660786007954</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1660786007954</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -380,7 +391,8 @@
     <MESSAGE value="Update gitignore to ignore sonarlint issues" />
     <MESSAGE value="Update OneOf and implement tests for OneOf" />
     <MESSAGE value="Support most lists of things" />
-    <option name="LAST_COMMIT_MESSAGE" value="Support most lists of things" />
+    <MESSAGE value="Support all kinds of lists." />
+    <option name="LAST_COMMIT_MESSAGE" value="Support all kinds of lists." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -395,6 +407,11 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/ProtoParser.java</url>
           <line>183</line>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/protoparser/parsers/OmnibusParser.java</url>
+          <line>503</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
