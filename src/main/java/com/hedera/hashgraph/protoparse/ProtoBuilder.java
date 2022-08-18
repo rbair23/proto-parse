@@ -3,10 +3,10 @@ package com.hedera.hashgraph.protoparse;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 
+import static com.hedera.hashgraph.protoparse.ProtoConstants.WIRE_TYPE_DELIMITED;
+
 // A protobuf builder. How does it work? Nobody knows!
 public abstract class ProtoBuilder {
-    private static final int WIRE_TYPE_DELIMITED = 2;
-
     // I kind of want to use a normal builder pattern for this, but the protobuf bytes are
     // written out as you call the various "write" methods... so you can stream it out
     // instead of buffering it in RAM. However, I would also like subclasses that have

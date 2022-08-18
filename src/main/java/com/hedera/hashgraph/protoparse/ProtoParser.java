@@ -6,6 +6,8 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.hedera.hashgraph.protoparse.ProtoConstants.*;
+
 /**
  * An abstract class from which fast and highly efficient Protobuf parsers may be built.
  *
@@ -46,44 +48,6 @@ import java.util.List;
  * (if using immutable types).
  */
 public abstract class ProtoParser implements ParseListener {
-
-	// In protobuf, the "wire type" indicates the way the value was encoded on the wire.
-	// Normally this isn't needed because when I know the field type, I know what the wire
-	// type should be (although this should be validated). However, this is needed when
-	// "skipping" bytes for unknown fields.
-	private static final int WIRE_TYPE_VARINT_OR_ZIGZAG = 0;
-	private static final int WIRE_TYPE_FIXED_64_BIT = 1;
-	private static final int WIRE_TYPE_DELIMITED = 2;
-	private static final int WIRE_TYPE_GROUP_START = 3;
-	private static final int WIRE_TYPE_GROUP_END = 4;
-	private static final int WIRE_TYPE_FIXED_32_BIT = 5;
-
-	/**
-	 * The number of lower order bits from the "tag" byte that should be rotated out
-	 * to reveal the field number
-	 */
-	private static final int TAG_FIELD_OFFSET = 3;
-
-	/**
-	 * Mask used to extract the wire type from the "tag" byte
-	 */
-	private static final int TAG_WRITE_TYPE_MASK = 0b0000_0111;
-
-	/**
-	 * Mask used to read the continuation bit from a varint encoded byte
-	 */
-	private static final int VARINT_CONTINUATION_MASK = 0b1000_0000;
-
-	/**
-	 * Mask used to read off the actual data bits from a varint encoded byte
-	 */
-	private static final int VARINT_DATA_MASK = 0b0111_1111;
-
-	/**
-	 * The number of actual data bits in a varint byte
-	 */
-	private static final int NUM_BITS_PER_VARINT_BYTE = 7;
-
 	/**
 	 * The protobuf data as a stream of bytes. This may be supplied directly by the caller
 	 * seeking to parse protobuf, or a reusable InputStream adapter provided by this class
@@ -233,7 +197,7 @@ public abstract class ProtoParser implements ParseListener {
 					case SFIXED_64 -> handleSfixed64(field, f);
 					case FIXED_64 -> handleFixed64(field, f);
 					case DOUBLE -> handleDouble(field, f);
-					case MESSAGE -> handleMessage(field, f);
+					case MESSAGE -> handleMessage(field);
 					case STRING -> handleString(field, f);
 					case BYTES -> handleBytes(field, f);
 					default -> {
@@ -381,7 +345,7 @@ public abstract class ProtoParser implements ParseListener {
 		bytesField(field, protoStream.readBytes(f.name()));
 	}
 
-	private void handleMessage(int field, FieldDefinition f) throws MalformedProtobufException, IOException {
+	private void handleMessage(int field) throws MalformedProtobufException, IOException {
 		final var nestedStream = new LimitedStream(protoStream, (int) protoStream.readLengthFromStream());
 		objectField(field, nestedStream);
 		if (nestedStream.totalBytesRead < nestedStream.maxBytesToRead) {
