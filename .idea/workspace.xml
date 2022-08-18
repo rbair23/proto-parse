@@ -4,11 +4,39 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5188fc4d-d373-4331-950f-2b686575846a" name="Changes" comment="Add docs and tests for FieldDefinition">
-      <change afterPath="$PROJECT_DIR$/src/test/java/protoparser/OneOfTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/FieldType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/FieldType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/MalformedProtobufException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/MalformedProtobufException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/OneOf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/OneOf.java" afterDir="false" />
+    <list default="true" id="5188fc4d-d373-4331-950f-2b686575846a" name="Changes" comment="Add docs and tests for OneOf">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/hedera/hashgraph/protoparse/ProtoBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/sample/target/model/Fruits.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/sample/target/model/Omnibus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/sample/target/proto/builders/AppleBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/sample/target/proto/schemas/AppleSchema.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/sample/target/proto/schemas/BananaSchema.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/sample/target/proto/schemas/FruitsSchema.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/sample/target/proto/schemas/NestedSchema.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/sample/target/proto/schemas/OmnibusSchema.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/tests/BuilderTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jmh/java/protoparse/TimestampParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/protoparse/TimestampParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/FieldDefinitionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/FieldDefinitionTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/FuzzTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/FuzzTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/NegativeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/NegativeTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/OneOfTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/OneOfTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/ParseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/ParseTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/Timestamp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/Timestamp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/TimestampParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/TimestampParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/model/Apple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/sample/target/model/Apple.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/model/Banana.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/sample/target/model/Banana.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/model/Everything.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/model/Fruit.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/model/Nested.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/sample/target/model/Nested.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/model/Suit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/sample/target/model/Suit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/parsers/AppleParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/sample/target/proto/parsers/AppleParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/parsers/BananaParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/sample/target/proto/parsers/BananaParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/parsers/FruitParser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/parsers/FruitsParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/sample/target/proto/parsers/FruitsParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/parsers/NestedParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/sample/target/proto/parsers/NestedParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/protoparser/parsers/OmnibusParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/sample/target/proto/parsers/OmnibusParser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,42 +76,6 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="proto-parse" type="f1a62948:ProjectNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build setup" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="proto-parse" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="documentation" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="proto-parse" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="help" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="proto-parse" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="jmh" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="proto-parse" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="other" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="proto-parse" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="publishing" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="proto-parse" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="verification" type="c8890929:TasksNode$1" />
               </path>
             </expand>
@@ -97,9 +89,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Record" />
         <option value="Enum" />
         <option value="Class" />
+        <option value="Record" />
       </list>
     </option>
   </component>
@@ -126,30 +118,30 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.go.format.on.save.advertiser.fired": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "go.import.settings.migrated": "true",
-    "last_opened_file_path": "/Users/richardbair/IdeaProjects/proto-parse/src/jmh/java/protoparse",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.language.Kotlin.scripting",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.format.on.save.advertiser.fired&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/richardbair/IdeaProjects/proto-parse/src/jmh/java/protoparse&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.language.Kotlin.scripting&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="protoparser" />
@@ -157,7 +149,7 @@
       <recent name="protoparser.model" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.FieldDefinitionTest">
+  <component name="RunManager" selected="Gradle.proto-parse [test]">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="proto-parse" />
       <working_directory value="$PROJECT_DIR$" />
@@ -177,7 +169,7 @@
       <framework value="gotest" />
       <method v="2" />
     </configuration>
-    <configuration name="FieldDefinitionTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="BuilderTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -190,7 +182,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;protoparser.FieldDefinitionTest&quot;" />
+            <option value="&quot;protoparser.BuilderTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -200,7 +192,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="ParseTest.parseBytesListOnly" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="BuilderTest.buildNullStringOnly" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -213,7 +205,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;protoparser.ParseTest.parseBytesListOnly&quot;" />
+            <option value="&quot;protoparser.BuilderTest.buildNullStringOnly&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -223,7 +215,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="ParseTest.parseFruitListOnly" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="BuilderTest.buildNullStringThrows" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -236,7 +228,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;protoparser.ParseTest.parseFruitListOnly&quot;" />
+            <option value="&quot;protoparser.BuilderTest.buildNullStringThrows&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -246,7 +238,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="ParseTest.parseNestedListOnly" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="Tests in 'proto-parse.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -258,8 +250,6 @@
         <option name="taskNames">
           <list>
             <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;protoparser.ParseTest.parseNestedListOnly&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -269,36 +259,34 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="ParseTest.parseStringListOnly" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="proto-parse [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
+        <option name="scriptParameters" />
         <option name="taskDescriptions">
           <list />
         </option>
         <option name="taskNames">
           <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;protoparser.ParseTest.parseStringListOnly&quot;" />
+            <option value="test" />
           </list>
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.FieldDefinitionTest" />
-        <item itemvalue="Gradle.ParseTest.parseFruitListOnly" />
-        <item itemvalue="Gradle.ParseTest.parseNestedListOnly" />
-        <item itemvalue="Gradle.ParseTest.parseBytesListOnly" />
-        <item itemvalue="Gradle.ParseTest.parseStringListOnly" />
+        <item itemvalue="Gradle.proto-parse [test]" />
+        <item itemvalue="Gradle.Tests in 'proto-parse.test'" />
+        <item itemvalue="Gradle.BuilderTest" />
+        <item itemvalue="Gradle.BuilderTest.buildNullStringThrows" />
+        <item itemvalue="Gradle.BuilderTest.buildNullStringOnly" />
       </list>
     </recent_temporary>
   </component>
@@ -316,7 +304,8 @@
       <workItem from="1660698357040" duration="2372000" />
       <workItem from="1660708858898" duration="1905000" />
       <workItem from="1660711194811" duration="5420000" />
-      <workItem from="1660745856675" duration="19741000" />
+      <workItem from="1660745856675" duration="23103000" />
+      <workItem from="1660836969045" duration="1496000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1660158953075</created>
@@ -374,7 +363,14 @@
       <option name="project" value="LOCAL" />
       <updated>1660789695071</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Add docs and tests for OneOf">
+      <created>1660790313659</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1660790313659</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -401,7 +397,8 @@
     <MESSAGE value="Support most lists of things" />
     <MESSAGE value="Support all kinds of lists." />
     <MESSAGE value="Add docs and tests for FieldDefinition" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add docs and tests for FieldDefinition" />
+    <MESSAGE value="Add docs and tests for OneOf" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add docs and tests for OneOf" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -418,8 +415,8 @@
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/protoparser/parsers/OmnibusParser.java</url>
-          <line>503</line>
+          <url>file://$PROJECT_DIR$/src/test/java/sample/target/proto/parsers/OmnibusParser.java</url>
+          <line>450</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>

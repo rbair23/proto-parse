@@ -1,20 +1,19 @@
-package protoparser.parsers;
+package sample.target.proto.parsers;
 
 import com.hedera.hashgraph.protoparse.FieldDefinition;
-import com.hedera.hashgraph.protoparse.FieldType;
 import com.hedera.hashgraph.protoparse.MalformedProtobufException;
 import com.hedera.hashgraph.protoparse.ProtoParser;
-import protoparser.model.Apple;
-import protoparser.model.Banana;
+import sample.target.model.Apple;
+import sample.target.model.Banana;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 
-public class FruitsParser extends ProtoParser {
-	private static final FieldDefinition APPLE = new FieldDefinition("apple", FieldType.MESSAGE, false, 1);
-	private static final FieldDefinition BANANA = new FieldDefinition("banana", FieldType.MESSAGE, false, 2);
+import static sample.target.proto.schemas.FruitsSchema.APPLE;
+import static sample.target.proto.schemas.FruitsSchema.BANANA;
 
+public class FruitsParser extends ProtoParser {
 	private Apple apple;
 	private Banana banana;
 

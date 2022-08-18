@@ -1,4 +1,4 @@
-package protoparser;
+package tests;
 
 import com.hedera.hashgraph.protoparse.OneOf;
 import org.junit.jupiter.api.Test;

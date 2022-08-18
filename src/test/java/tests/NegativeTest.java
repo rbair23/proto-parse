@@ -1,4 +1,4 @@
-package protoparser;
+package tests;
 
 public class NegativeTest {
     // Take a valid protobuf, and send 1 byte, then 2 bytes, and so forth until all bytes - 1. All calls

@@ -1,4 +1,4 @@
-package protoparser.model;
+package sample.target.model;
 
 public enum Suit {
 	ACES, SPADES, CLUBS, DIAMONDS;

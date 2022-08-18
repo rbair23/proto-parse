@@ -1,0 +1,8 @@
+package sample.target.proto.schemas;
+
+import com.hedera.hashgraph.protoparse.FieldDefinition;
+import com.hedera.hashgraph.protoparse.FieldType;
+
+public final class BananaSchema {
+    public static final FieldDefinition VARIETY = new FieldDefinition("variety", FieldType.STRING, false, 1);
+}

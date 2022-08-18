@@ -1,4 +1,4 @@
-package protoparser;
+package tests;
 
 import com.hedera.hashgraph.protoparse.FieldDefinition;
 import com.hedera.hashgraph.protoparse.FieldType;
