@@ -16,7 +16,7 @@ public enum FieldType {
 	FIXED_64,
 	SFIXED_32,
 	SFIXED_64,
-	BOOLEAN,
+	BOOL,
 	STRING,
 	BYTES,
 	ENUM,

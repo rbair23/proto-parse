@@ -8,7 +8,7 @@ public class OmnibusSchema {
     public static final FieldDefinition INT64_NUMBER = new FieldDefinition("int64Number", FieldType.INT_64, false, 11);
     public static final FieldDefinition UINT32_NUMBER = new FieldDefinition("uint32Number", FieldType.UINT_32, false, 12);
     public static final FieldDefinition UINT64_NUMBER = new FieldDefinition("unit64Number", FieldType.UINT_64, false, 13);
-    public static final FieldDefinition FLAG = new FieldDefinition("flag", FieldType.BOOLEAN, false, 14);
+    public static final FieldDefinition FLAG = new FieldDefinition("flag", FieldType.BOOL, false, 14);
     public static final FieldDefinition SUIT = new FieldDefinition("suitEnum", FieldType.ENUM, false, 15);
     public static final FieldDefinition SINT32_NUMBER = new FieldDefinition("sint32Number", FieldType.SINT_32, false, 30);
     public static final FieldDefinition SINT64_NUMBER = new FieldDefinition("sint64Number", FieldType.SINT_64, false, 31);
@@ -27,7 +27,7 @@ public class OmnibusSchema {
     public static final FieldDefinition INT64_UNIQUE = new FieldDefinition("int64Unique", FieldType.INT_64, false, 211);
     public static final FieldDefinition UINT32_UNIQUE = new FieldDefinition("uint32Unique", FieldType.UINT_32, false, 212);
     public static final FieldDefinition UINT64_UNIQUE = new FieldDefinition("uint64Unique", FieldType.UINT_64, false, 213);
-    public static final FieldDefinition FLAG_UNIQUE = new FieldDefinition("flagUnique", FieldType.BOOLEAN, false, 214);
+    public static final FieldDefinition FLAG_UNIQUE = new FieldDefinition("flagUnique", FieldType.BOOL, false, 214);
     public static final FieldDefinition SUIT_UNIQUE = new FieldDefinition("suiteEnumUnique", FieldType.ENUM, false, 215);
     public static final FieldDefinition SINT32_UNIQUE = new FieldDefinition("sint32Unique", FieldType.SINT_32, false, 230);
     public static final FieldDefinition SINT64_UNIQUE = new FieldDefinition("sint64Unique", FieldType.SINT_64, false, 231);
@@ -44,7 +44,7 @@ public class OmnibusSchema {
     public static final FieldDefinition INT64_REPEATED = new FieldDefinition("int64NumberList", FieldType.INT_64, true, 301);
     public static final FieldDefinition UINT32_REPEATED = new FieldDefinition("uint32NumberList", FieldType.UINT_32, true, 302);
     public static final FieldDefinition UINT64_REPEATED = new FieldDefinition("uint64NumberList", FieldType.UINT_64, true, 303);
-    public static final FieldDefinition FLAG_REPEATED = new FieldDefinition("flagList", FieldType.BOOLEAN, true, 304);
+    public static final FieldDefinition FLAG_REPEATED = new FieldDefinition("flagList", FieldType.BOOL, true, 304);
     public static final FieldDefinition SUIT_REPEATED = new FieldDefinition("suitEnumList", FieldType.ENUM, true, 305);
     public static final FieldDefinition SINT32_REPEATED = new FieldDefinition("sint32NumberList", FieldType.SINT_32, true, 306);
     public static final FieldDefinition SINT64_REPEATED = new FieldDefinition("sint64NumberList", FieldType.SINT_64, true, 307);

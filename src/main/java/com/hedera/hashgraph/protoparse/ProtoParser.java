@@ -185,7 +185,7 @@ public abstract class ProtoParser implements ParseListener {
 					case INT_64 -> handleInt64(field, f);
 					case UINT_32 -> handleUint32(field, f);
 					case UINT_64 -> handleUint64(field, f);
-					case BOOLEAN -> handleBoolean(field, f);
+					case BOOL -> handleBoolean(field, f);
 					case ENUM -> handleEnum(field, f);
 
 					case SINT_32 -> handleSint32(field, f);
