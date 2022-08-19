@@ -69,6 +69,22 @@ public abstract class ProtoBuilder {
 
     }
 
+    /**
+     * As though it were a DataOutputStream. Call it ProtoOutputStream or ProtobufOutputStream.
+     *
+     *  - private writeVarint(long, boolean zigZag) // zig zag support is missing
+     *  - writeInt32(fieldNumber, int)
+     *  - writeSint32(fieldNumber, int) // uses zig zag, also the 64-bit version
+     *  - ...
+     *  - writeInt32List(fieldNumber, List of ints or whatever)
+     *  - writeStringList(fieldNumber, List of ints or whatever)
+     *  - ...
+     *  - Hmmm. For one-of, what happens if the writer writes more than one item in the one-of? I assume the parser has to deal with it. Do we?
+     *  - writeBytes(fieldNumber, byte[]) // could have ByteBuffer and InputStream variants if you wanted to
+     *  - writeEnum(fieldNumber, int ordinal)
+     *  - writeMessage(fieldNumber, ProtoBuilder)
+     *  - writeMessage(fieldNumber, byte[]) // could have ByteBuffer and InputStream variants if you wanted to
+     */
     private static final class ProtoBuffer {
         private LinkedList<byte[]> arrays = new LinkedList<>();
         private byte[] currentBuffer;
