@@ -71,8 +71,15 @@ public abstract class ProtoBuilder {
 
     /**
      * As though it were a DataOutputStream. Call it ProtoOutputStream or ProtobufOutputStream.
+     * Do we use FieldDefinition instead of fieldNumber and do validation on the schema at write time?
      *
      *  - private writeVarint(long, boolean zigZag) // zig zag support is missing
+     *  // You will need these 4 because protobuf is little endian :-)
+     *  - private writeLong(long)
+     *  - private writeInteger(int)
+     *  - private writeFloat(float)
+     *  - private writeDouble(double)
+     *
      *  - writeInt32(fieldNumber, int)
      *  - writeSint32(fieldNumber, int) // uses zig zag, also the 64-bit version
      *  - ...
