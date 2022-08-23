@@ -77,7 +77,7 @@ class ParseTest {
 	}
 
 	@ParameterizedTest
-	@ValueSource(ints = {Integer.MIN_VALUE, -5, 1, 3, 5, Integer.MAX_VALUE})
+	@ValueSource(ints = {Integer.MIN_VALUE, -5, 0, 1, 3, 5, Integer.MAX_VALUE})
 	void parseInt32Only(int val) throws Exception {
 		final var protobuf = test.proto.Omnibus.newBuilder()
 				.setInt32Number(val)
@@ -89,7 +89,7 @@ class ParseTest {
 	}
 
 	@ParameterizedTest
-	@ValueSource(longs = { Long.MIN_VALUE, -5, 1, 3, 5, Long.MAX_VALUE })
+	@ValueSource(longs = { Long.MIN_VALUE, -5, 0, 1, 3, 5, Long.MAX_VALUE })
 	void parseInt64Only(long val) throws Exception {
 		final var protobuf = test.proto.Omnibus.newBuilder()
 				.setInt64Number(val)
@@ -101,7 +101,7 @@ class ParseTest {
 	}
 
 	@ParameterizedTest
-	@ValueSource(ints = { Integer.MIN_VALUE, -5, 1, 3, 5, Integer.MAX_VALUE })
+	@ValueSource(ints = { Integer.MIN_VALUE, -5, 0, 1, 3, 5, Integer.MAX_VALUE })
 	void parseUint32Only(int val) throws Exception {
 		final var protobuf = test.proto.Omnibus.newBuilder()
 				.setUint32Number(val)
@@ -113,7 +113,7 @@ class ParseTest {
 	}
 
 	@ParameterizedTest
-	@ValueSource(longs = { Long.MIN_VALUE, -5, 1, 3, 5, Long.MAX_VALUE })
+	@ValueSource(longs = { Long.MIN_VALUE, -5, 0, 1, 3, 5, Long.MAX_VALUE })
 	void parseUint64Only(long val) throws Exception {
 		final var protobuf = test.proto.Omnibus.newBuilder()
 				.setUint64Number(val)
@@ -149,7 +149,7 @@ class ParseTest {
 	}
 
 	@ParameterizedTest
-	@ValueSource(ints = { Integer.MIN_VALUE, -102, -5, 1, 3, 5, 42, Integer.MAX_VALUE })
+	@ValueSource(ints = { Integer.MIN_VALUE, -102, -5, 0, 1, 3, 5, 42, Integer.MAX_VALUE })
 	void parseSint32Only(int val) throws Exception {
 		final var protobuf = test.proto.Omnibus.newBuilder()
 				.setSint32Number(val)
@@ -161,7 +161,7 @@ class ParseTest {
 	}
 
 	@ParameterizedTest
-	@ValueSource(longs = { Long.MIN_VALUE, -102, -5, 1, 3, 5, 42, Long.MAX_VALUE })
+	@ValueSource(longs = { Long.MIN_VALUE, -102, -5, 0, 1, 3, 5, 42, Long.MAX_VALUE })
 	void parseSint64Only(long val) throws Exception {
 		final var protobuf = test.proto.Omnibus.newBuilder()
 				.setSint64Number(val)
@@ -173,7 +173,7 @@ class ParseTest {
 	}
 
 	@ParameterizedTest
-	@ValueSource(ints = { Integer.MIN_VALUE, -102, -5, 1, 3, 5, 42, Integer.MAX_VALUE })
+	@ValueSource(ints = { Integer.MIN_VALUE, -102, -5, 0, 1, 3, 5, 42, Integer.MAX_VALUE })
 	void parseSfixed32Only(int val) throws Exception {
 		final var protobuf = test.proto.Omnibus.newBuilder()
 				.setSfixed32Number(val)
@@ -185,7 +185,7 @@ class ParseTest {
 	}
 
 	@ParameterizedTest
-	@ValueSource(longs = { Long.MIN_VALUE, -102, -5, 1, 3, 5, 42, Long.MAX_VALUE })
+	@ValueSource(longs = { Long.MIN_VALUE, -102, -5, 0, 1, 3, 5, 42, Long.MAX_VALUE })
 	void parseSfixed64Only(long val) throws Exception {
 		final var protobuf = test.proto.Omnibus.newBuilder()
 				.setSfixed64Number(val)
@@ -197,7 +197,7 @@ class ParseTest {
 	}
 
 	@ParameterizedTest
-	@ValueSource(ints = { Integer.MIN_VALUE, -102, -5, 1, 3, 5, 42, Integer.MAX_VALUE })
+	@ValueSource(ints = { Integer.MIN_VALUE, -102, -5, 0, 1, 3, 5, 42, Integer.MAX_VALUE })
 	void parseFixed32Only(int val) throws Exception {
 		final var protobuf = test.proto.Omnibus.newBuilder()
 				.setFixed32Number(val)
@@ -209,7 +209,7 @@ class ParseTest {
 	}
 
 	@ParameterizedTest
-	@ValueSource(longs = { Long.MIN_VALUE, -102, -5, 1, 3, 5, 42, Long.MAX_VALUE })
+	@ValueSource(longs = { Long.MIN_VALUE, -102, -5, 0, 1, 3, 5, 42, Long.MAX_VALUE })
 	void parseFixed64Only(long val) throws Exception {
 		final var protobuf = test.proto.Omnibus.newBuilder()
 				.setFixed64Number(val)
@@ -221,7 +221,7 @@ class ParseTest {
 	}
 
 	@ParameterizedTest
-	@ValueSource(floats = {Float.NEGATIVE_INFINITY, Float.MIN_VALUE, -102.7f, -5f, 1.7f, 3, 5.2f, 42.1f, Float.MAX_VALUE, Float.POSITIVE_INFINITY, Float.NaN})
+	@ValueSource(floats = {Float.NEGATIVE_INFINITY, Float.MIN_VALUE, -102.7f, -5f, 0f, 1.7f, 3f, 5.2f, 42.1f, Float.MAX_VALUE, Float.POSITIVE_INFINITY, Float.NaN})
 	void parseFloatOnly(float val) throws Exception {
 		final var protobuf = test.proto.Omnibus.newBuilder()
 				.setFloatNumber(val)
@@ -233,7 +233,7 @@ class ParseTest {
 	}
 
 	@ParameterizedTest
-	@ValueSource(doubles = {Double.NEGATIVE_INFINITY, Double.MIN_VALUE, -102.7, -5, 1.7, 3, 5.2, 42.1, Double.MAX_VALUE, Double.POSITIVE_INFINITY, Double.NaN})
+	@ValueSource(doubles = {Double.NEGATIVE_INFINITY, Double.MIN_VALUE, -102.7, -5, 0, 1.7, 3, 5.2, 42.1, Double.MAX_VALUE, Double.POSITIVE_INFINITY, Double.NaN})
 	void parseDoubleOnly(double val) throws Exception {
 		final var protobuf = test.proto.Omnibus.newBuilder()
 				.setDoubleNumber(val)

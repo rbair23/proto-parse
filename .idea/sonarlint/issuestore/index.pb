@@ -36,8 +36,6 @@ Z
 *src/test/java/protoparser/model/Apple.java,c/3/c397168e2c0fdd88190060a060dd49c3b6e053ed
 [
 +src/test/java/protoparser/NegativeTest.java,7/0/703483f0104b5dca456427384e1e56e32cbce7de
-r
-Bsrc/main/java/com/hedera/hashgraph/protoparse/FieldDefinition.java,3/5/35be859e8df8eedacc22510ab9fa067309e68285
 b
 2src/test/java/protoparser/FieldDefinitionTest.java,d/7/d71c711e5251232ea05e716ff073211d6ea0beaf
 l
