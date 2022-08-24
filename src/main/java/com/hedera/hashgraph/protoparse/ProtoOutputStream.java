@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 import static com.hedera.hashgraph.protoparse.ProtoConstants.*;
 
@@ -17,16 +18,24 @@ import static com.hedera.hashgraph.protoparse.ProtoConstants.*;
  *  - writeMessage(fieldNumber, byte[]) // could have ByteBuffer and InputStream variants if you wanted to
  */
 public class ProtoOutputStream {
-    private final OutputStream out;
-    // When we have a schema interface it can have the goodies on it...
-//    private final Schema schema;
+    private static final String FIELD_ASSERT_MSG = "Field %s doesn't belong to the expected schema";
 
-    public ProtoOutputStream(OutputStream out) {
+    private final OutputStream out;
+    private final Predicate<FieldDefinition> fieldChecker;
+
+    public ProtoOutputStream(Predicate<FieldDefinition> fieldChecker, OutputStream out) {
         this.out = Objects.requireNonNull(out);
+        this.fieldChecker = Objects.requireNonNull(fieldChecker);
     }
 
     public void writeInteger(FieldDefinition field, int value) throws IOException {
-        // TODO Call Schema to validate the field (do a couple of asserts)
+        assert fieldChecker.test(field) : FIELD_ASSERT_MSG.formatted(field);
+        assert switch(field.type()) {
+            case INT_32, UINT_32, SINT_32, FIXED_32, SFIXED_32 -> true;
+            default -> false;
+        } : "Not an integer type " + field;
+        assert !field.repeated() : "Use ProtoOutputStream#writeIntegerList with repeated types";
+
         if (value == 0) {
             return;
         }
@@ -57,7 +66,13 @@ public class ProtoOutputStream {
     }
 
     public void writeLong(FieldDefinition field, long value) throws IOException {
-        // TODO Call Schema to validate the field (do a couple of asserts)
+        assert fieldChecker.test(field) : FIELD_ASSERT_MSG.formatted(field);
+        assert switch(field.type()) {
+            case INT_64, UINT_64, SINT_64, FIXED_64, SFIXED_64 -> true;
+            default -> false;
+        } : "Not a long type " + field;
+        assert !field.repeated() : "Use ProtoOutputStream#writeLongList with repeated types";
+
         if (value == 0) {
             return;
         }
@@ -102,25 +117,36 @@ public class ProtoOutputStream {
     }
 
     public void writeFloat(FieldDefinition field, float value) throws IOException {
-        // TODO Call Schema to validate the field (do a couple of asserts)
+        assert fieldChecker.test(field) : FIELD_ASSERT_MSG.formatted(field);
+        assert field.type() == FieldType.FLOAT : "Not a float type " + field;
+        assert !field.repeated() : "Use ProtoOutputStream#writeFloatList with repeated types";
+
         if (value == 0) {
             return;
         }
+
         writeTag(field, WIRE_TYPE_FIXED_32_BIT);
-        writeIntToStream(Float.floatToRawIntBits(value)); // todo should I use the non-raw variant?
+        writeIntToStream(Float.floatToRawIntBits(value));
     }
 
     public void writeDouble(FieldDefinition field, double value) throws IOException {
-        // TODO Call Schema to validate the field (do a couple of asserts)
+        assert fieldChecker.test(field) : FIELD_ASSERT_MSG.formatted(field);
+        assert field.type() == FieldType.DOUBLE : "Not a double type " + field;
+        assert !field.repeated() : "Use ProtoOutputStream#writeDoubleList with repeated types";
+
         if (value == 0) {
             return;
         }
+
         writeTag(field, WIRE_TYPE_FIXED_64_BIT);
-        writeLongToStream(Double.doubleToRawLongBits(value)); // todo should I use the non-raw variant?
+        writeLongToStream(Double.doubleToRawLongBits(value));
     }
 
     public void writeBoolean(FieldDefinition field, boolean value) throws IOException {
-        // TODO Call Schema to validate the field (do a couple of asserts)
+        assert fieldChecker.test(field) : FIELD_ASSERT_MSG.formatted(field);
+        assert field.type() == FieldType.BOOL : "Not a boolean type " + field;
+        assert !field.repeated() : "Use ProtoOutputStream#writeBooleanList with repeated types";
+
         if (value) {
             writeTag(field, WIRE_TYPE_VARINT_OR_ZIGZAG);
             out.write(1);
@@ -128,7 +154,10 @@ public class ProtoOutputStream {
     }
 
     public void writeEnum(FieldDefinition field, int ordinal) throws IOException {
-        // TODO Call Schema to validate the field (do a couple of asserts)
+        assert fieldChecker.test(field) : FIELD_ASSERT_MSG.formatted(field);
+        assert field.type() == FieldType.ENUM : "Not an enum type " + field;
+        assert !field.repeated() : "Use ProtoOutputStream#writeEnumList with repeated types";
+
         if (ordinal == 0) {
             return;
         }
@@ -138,7 +167,13 @@ public class ProtoOutputStream {
     }
 
     public void writeString(FieldDefinition field, String value) throws IOException {
-        // TODO Call Schema to validate the field (do a couple of asserts)
+        assert fieldChecker.test(field) : FIELD_ASSERT_MSG.formatted(field);
+        assert field.type() == FieldType.STRING : "Not a string type " + field;
+        assert !field.repeated() : "Use ProtoOutputStream#writeStringList with repeated types";
+        _writeString(field, value);
+    }
+
+    private void _writeString(FieldDefinition field, String value) throws IOException {
         if (value == null || value.isBlank()) {
             return;
         }
@@ -150,7 +185,13 @@ public class ProtoOutputStream {
     }
 
     public void writeBytes(FieldDefinition field, byte[] value) throws IOException {
-        // TODO Call Schema to validate the field (do a couple of asserts)
+        assert fieldChecker.test(field) : FIELD_ASSERT_MSG.formatted(field);
+        assert field.type() == FieldType.BYTES : "Not a byte[] type " + field;
+        assert !field.repeated() : "Use ProtoOutputStream#writeBytesList with repeated types";
+        _writeBytes(field, value);
+    }
+
+    public void _writeBytes(FieldDefinition field, byte[] value) throws IOException {
         if (value.length == 0) {
             return;
         }
@@ -160,6 +201,13 @@ public class ProtoOutputStream {
     }
 
     public <T> void writeMessage(FieldDefinition field, T message, ProtoWriter<T> writer) throws IOException {
+        assert fieldChecker.test(field) : FIELD_ASSERT_MSG.formatted(field);
+        assert field.type() == FieldType.MESSAGE : "Not a message type " + field;
+        assert !field.repeated() : "Use ProtoOutputStream#writeMessageList with repeated types";
+        _writeMessage(field, message, writer);
+    }
+
+    public <T> void _writeMessage(FieldDefinition field, T message, ProtoWriter<T> writer) throws IOException {
         if (message != null) {
             writeTag(field, WIRE_TYPE_DELIMITED);
             final var baos = new ByteArrayOutputStream();
@@ -172,7 +220,13 @@ public class ProtoOutputStream {
     }
 
     public void writeIntegerList(FieldDefinition field, List<Integer> list) throws IOException {
-        // TODO Call Schema to validate the field (do a couple of asserts)
+        assert fieldChecker.test(field) : FIELD_ASSERT_MSG.formatted(field);
+        assert switch(field.type()) {
+            case INT_32, UINT_32, SINT_32, FIXED_32, SFIXED_32 -> true;
+            default -> false;
+        } : "Not an integer type " + field;
+        assert field.repeated() : "Use ProtoOutputStream#writeInteger with non-repeated types";
+
         if (list.isEmpty()) {
             return;
         }
@@ -219,7 +273,13 @@ public class ProtoOutputStream {
     }
 
     public void writeLongList(FieldDefinition field, List<Long> list) throws IOException {
-        // TODO Call Schema to validate the field (do a couple of asserts)
+        assert fieldChecker.test(field) : FIELD_ASSERT_MSG.formatted(field);
+        assert switch(field.type()) {
+            case INT_64, UINT_64, SINT_64, FIXED_64, SFIXED_64 -> true;
+            default -> false;
+        } : "Not a long type " + field;
+        assert field.repeated() : "Use ProtoOutputStream#writeLong with non-repeated types";
+
         if (list.isEmpty()) {
             return;
         }
@@ -258,7 +318,10 @@ public class ProtoOutputStream {
     }
 
     public void writeBooleanList(FieldDefinition field, List<Boolean> list) throws IOException {
-        // TODO Call Schema to validate the field (do a couple of asserts)
+        assert fieldChecker.test(field) : FIELD_ASSERT_MSG.formatted(field);
+        assert field.type() == FieldType.BOOL : "Not a boolean type " + field;
+        assert field.repeated() : "Use ProtoOutputStream#writeBoolean with non-repeated types";
+
         if (list.isEmpty()) {
             return;
         }
@@ -273,7 +336,10 @@ public class ProtoOutputStream {
     }
 
     public void writeEnumList(FieldDefinition field, List<Integer> list) throws IOException {
-        // TODO Call Schema to validate the field (do a couple of asserts)
+        assert fieldChecker.test(field) : FIELD_ASSERT_MSG.formatted(field);
+        assert field.type() == FieldType.ENUM : "Not an enum type " + field;
+        assert field.repeated() : "Use ProtoOutputStream#writeEnum with non-repeated types";
+
         if (list.isEmpty()) {
             return;
         }
@@ -288,22 +354,30 @@ public class ProtoOutputStream {
     }
 
     public void writeStringList(FieldDefinition field, List<String> list) throws IOException {
+        assert fieldChecker.test(field) : FIELD_ASSERT_MSG.formatted(field);
+        assert field.type() == FieldType.STRING : "Not a string type " + field;
+        assert field.repeated() : "Use ProtoOutputStream#writeString with non-repeated types";
+
         if (list.isEmpty()) {
             return;
         }
 
         for (final String value : list) {
-            writeString(field, value);
+            _writeString(field, value);
         }
     }
 
     public <T> void writeMessageList(FieldDefinition field, List<T> list, ProtoWriter<T> writer) throws IOException {
+        assert fieldChecker.test(field) : FIELD_ASSERT_MSG.formatted(field);
+        assert field.type() == FieldType.MESSAGE : "Not a message type " + field;
+        assert field.repeated() : "Use ProtoOutputStream#writeMessage with non-repeated types";
+
         if (list.isEmpty()) {
             return;
         }
 
         for (final T value : list) {
-            writeMessage(field, value, writer);
+            _writeMessage(field, value, writer);
         }
     }
 
@@ -313,7 +387,7 @@ public class ProtoOutputStream {
         }
 
         for (final byte[] value : list) {
-            writeBytes(field, value);
+            _writeBytes(field, value);
         }
     }
 

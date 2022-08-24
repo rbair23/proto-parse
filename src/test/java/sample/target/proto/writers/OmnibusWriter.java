@@ -10,10 +10,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class OmnibusWriter implements ProtoWriter<Omnibus> {
-    private final NestedWriter nestedWriter = new NestedWriter();
-
     public void write(Omnibus omnibus, OutputStream out) throws IOException {
-        final var pb = new ProtoOutputStream(out);
+        final var pb = new ProtoOutputStream(OmnibusSchema::valid, out);
         pb.writeInteger(OmnibusSchema.INT32_NUMBER, omnibus.int32Number());
         pb.writeInteger(OmnibusSchema.SINT32_NUMBER, omnibus.sint32Number());
         pb.writeInteger(OmnibusSchema.UINT32_NUMBER, omnibus.uint32Number());
@@ -29,7 +27,7 @@ public class OmnibusWriter implements ProtoWriter<Omnibus> {
         pb.writeFloat(OmnibusSchema.FLOAT_NUMBER, omnibus.floatNumber());
         pb.writeDouble(OmnibusSchema.DOUBLE_NUMBER, omnibus.doubleNumber());
         pb.writeBytes(OmnibusSchema.RANDOM_BYTES, omnibus.randomBytes());
-        pb.writeMessage(OmnibusSchema.NESTED, omnibus.nested(), nestedWriter);
+        pb.writeMessage(OmnibusSchema.NESTED, omnibus.nested(), NestedWriter::write);
         pb.writeIntegerList(OmnibusSchema.INT32_REPEATED, omnibus.int32NumberList());
         pb.writeIntegerList(OmnibusSchema.UINT32_REPEATED, omnibus.uint32NumberList());
         pb.writeIntegerList(OmnibusSchema.SINT32_REPEATED, omnibus.sint32NumberList());
@@ -40,17 +38,18 @@ public class OmnibusWriter implements ProtoWriter<Omnibus> {
         pb.writeLongList(OmnibusSchema.SINT64_REPEATED, omnibus.sint64NumberList());
         pb.writeLongList(OmnibusSchema.SFIXED64_REPEATED, omnibus.sfixed64NumberList());
         pb.writeLongList(OmnibusSchema.FIXED64_REPEATED, omnibus.fixed64NumberList());
+        // TODO add test for double number list and float number list
         pb.writeBooleanList(OmnibusSchema.FLAG_REPEATED, omnibus.flagList());
         pb.writeEnumList(OmnibusSchema.SUIT_REPEATED, omnibus.suitEnumList().stream().map(Enum::ordinal).toList());
         pb.writeStringList(OmnibusSchema.MEMO_REPEATED, omnibus.memoList());
-        pb.writeMessageList(OmnibusSchema.NESTED_REPEATED, omnibus.nestedList(), nestedWriter);
+        pb.writeMessageList(OmnibusSchema.NESTED_REPEATED, omnibus.nestedList(), NestedWriter::write);
         pb.writeBytesList(OmnibusSchema.RANDOM_BYTES_REPEATED, omnibus.randomBytesList());
 
         final var oneOfFruit = omnibus.fruit();
         if (oneOfFruit != null) {
             switch (oneOfFruit.kind()) {
-                case APPLE -> pb.writeMessage(OmnibusSchema.FRUIT_APPLE, oneOfFruit.as(), new AppleWriter());
-                case BANANA -> pb.writeMessage(OmnibusSchema.FRUIT_BANANA, oneOfFruit.as(), new BananaWriter());
+                case APPLE -> pb.writeMessage(OmnibusSchema.FRUIT_APPLE, oneOfFruit.as(), AppleWriter::write);
+                case BANANA -> pb.writeMessage(OmnibusSchema.FRUIT_BANANA, oneOfFruit.as(), BananaWriter::write);
             }
         }
 
@@ -73,7 +72,7 @@ public class OmnibusWriter implements ProtoWriter<Omnibus> {
                 case DOUBLE -> pb.writeDouble(OmnibusSchema.DOUBLE_UNIQUE, oneOfEverything.as());
                 case RANDOM_BYTES -> pb.writeBytes(OmnibusSchema.RANDOM_BYTES_UNIQUE, oneOfEverything.as());
                 case MEMO -> pb.writeString(OmnibusSchema.MEMO_UNIQUE, oneOfEverything.as());
-                case NESTED -> pb.writeMessage(OmnibusSchema.NESTED_UNIQUE, oneOfEverything.as(), nestedWriter);
+                case NESTED -> pb.writeMessage(OmnibusSchema.NESTED_UNIQUE, oneOfEverything.as(), NestedWriter::write);
             }
         }
     }

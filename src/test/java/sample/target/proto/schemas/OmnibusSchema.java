@@ -58,4 +58,68 @@ public class OmnibusSchema {
     public static final FieldDefinition RANDOM_BYTES_REPEATED = new FieldDefinition("randomBytesList", FieldType.BYTES, true, 315);
     public static final FieldDefinition NESTED_REPEATED = new FieldDefinition("nestedList", FieldType.MESSAGE, true, 316);
     public static final FieldDefinition FRUITS_REPEATED = new FieldDefinition("fruitsList", FieldType.MESSAGE, true, 317);
+
+    public static boolean valid(FieldDefinition field) {
+        return field != null && field == getField(field.number());
+    }
+
+    public static FieldDefinition getField(final int fieldNumber) {
+        return switch (fieldNumber) {
+            case 10 -> INT32_NUMBER;
+            case 11 -> INT64_NUMBER;
+            case 12 -> UINT32_NUMBER;
+            case 13 -> UINT64_NUMBER;
+            case 14 -> FLAG;
+            case 15 -> SUIT;
+            case 30 -> SINT32_NUMBER;
+            case 31 -> SINT64_NUMBER;
+            case 20 -> SFIXED32_NUMBER;
+            case 25 -> SFIXED64_NUMBER;
+            case 21 -> FIXED32_NUMBER;
+            case 26 -> FIXED64_NUMBER;
+            case 22 -> FLOAT_NUMBER;
+            case 27 -> DOUBLE_NUMBER;
+            case 1 -> MEMO;
+            case 2 -> RANDOM_BYTES;
+            case 3 -> NESTED;
+            case 200 -> FRUIT_APPLE;
+            case 201 -> FRUIT_BANANA;
+            case 210 -> INT32_UNIQUE;
+            case 211 -> INT64_UNIQUE;
+            case 212 -> UINT32_UNIQUE;
+            case 213 -> UINT64_UNIQUE;
+            case 214 -> FLAG_UNIQUE;
+            case 215 -> SUIT_UNIQUE;
+            case 230 -> SINT32_UNIQUE;
+            case 231 -> SINT64_UNIQUE;
+            case 220 -> SFIXED32_UNIQUE;
+            case 225 -> SFIXED64_UNIQUE;
+            case 221 -> FIXED32_UNIQUE;
+            case 226 -> FIXED64_UNIQUE;
+            case 222 -> FLOAT_UNIQUE;
+            case 227 -> DOUBLE_UNIQUE;
+            case 251 -> MEMO_UNIQUE;
+            case 252 -> RANDOM_BYTES_UNIQUE;
+            case 253 -> NESTED_UNIQUE;
+            case 300 -> INT32_REPEATED;
+            case 301 -> INT64_REPEATED;
+            case 302 -> UINT32_REPEATED;
+            case 303 -> UINT64_REPEATED;
+            case 304 -> FLAG_REPEATED;
+            case 305 -> SUIT_REPEATED;
+            case 306 -> SINT32_REPEATED;
+            case 307 -> SINT64_REPEATED;
+            case 308 -> SFIXED32_REPEATED;
+            case 309 -> SFIXED64_REPEATED;
+            case 310 -> FIXED32_REPEATED;
+            case 311 -> FIXED64_REPEATED;
+            case 312 -> FLOAT_REPEATED;
+            case 313 -> DOUBLE_REPEATED;
+            case 314 -> MEMO_REPEATED;
+            case 315 -> RANDOM_BYTES_REPEATED;
+            case 316 -> NESTED_REPEATED;
+            case 317 -> FRUITS_REPEATED;
+            default -> null;
+        };
+    }
 }

@@ -10,9 +10,9 @@ import sample.target.proto.schemas.BananaSchema;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class BananaWriter implements ProtoWriter<Banana> {
-    public void write(Banana banana, OutputStream out) throws IOException {
-        final var pb = new ProtoOutputStream(out);
+public final class BananaWriter {
+    public static void write(Banana banana, OutputStream out) throws IOException {
+        final var pb = new ProtoOutputStream(BananaSchema::valid, out);
         pb.writeString(BananaSchema.VARIETY, banana.variety());
     }
 }
