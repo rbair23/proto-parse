@@ -40,7 +40,7 @@ public class OmnibusWriter implements ProtoWriter<Omnibus> {
         pb.writeLongList(OmnibusSchema.FIXED64_REPEATED, omnibus.fixed64NumberList());
         // TODO add test for double number list and float number list
         pb.writeBooleanList(OmnibusSchema.FLAG_REPEATED, omnibus.flagList());
-        pb.writeEnumList(OmnibusSchema.SUIT_REPEATED, omnibus.suitEnumList().stream().map(Enum::ordinal).toList());
+        pb.writeEnumList(OmnibusSchema.SUIT_REPEATED, omnibus.suitEnumList());
         pb.writeStringList(OmnibusSchema.MEMO_REPEATED, omnibus.memoList());
         pb.writeMessageList(OmnibusSchema.NESTED_REPEATED, omnibus.nestedList(), NestedWriter::write);
         pb.writeBytesList(OmnibusSchema.RANDOM_BYTES_REPEATED, omnibus.randomBytesList());

@@ -46,7 +46,7 @@ public class ProtoOutputStream {
     public void writeOptionalBoolean(FieldDefinition field, Optional<Boolean> value) throws IOException {
         if (value != null && value.isPresent()) writeBoolean(field,value.get());
     }
-    public void writeOptionalEnum(FieldDefinition field, Optional<EnumWithProtoOrdinal> value) throws IOException {
+    public void writeOptionalEnum(FieldDefinition field, Optional<? extends EnumWithProtoOrdinal> value) throws IOException {
         if (value != null && value.isPresent()) writeEnum(field,value.get());
     }
     public void writeOptionalString(FieldDefinition field, Optional<String> value) throws IOException {
@@ -366,7 +366,7 @@ public class ProtoOutputStream {
         out.write(buffer.toByteArray());
     }
 
-    public void writeEnumList(FieldDefinition field, List<Integer> list) throws IOException {
+    public void writeEnumList(FieldDefinition field, List<? extends EnumWithProtoOrdinal> list) throws IOException {
         assert fieldChecker.test(field) : FIELD_ASSERT_MSG.formatted(field);
         assert field.type() == FieldType.ENUM : "Not an enum type " + field;
         assert field.repeated() : "Use ProtoOutputStream#writeEnum with non-repeated types";
@@ -377,8 +377,8 @@ public class ProtoOutputStream {
 
         final var buffer = new ByteArrayOutputStream();
         writeTag(field, WIRE_TYPE_DELIMITED);
-        for (final int ordinal : list) {
-            writeVarint(ordinal, false, buffer);
+        for (final EnumWithProtoOrdinal enumValue : list) {
+            writeVarint(enumValue.protoOrdinal(), false, buffer);
         }
         writeVarint(buffer.size(), false);
         out.write(buffer.toByteArray());
