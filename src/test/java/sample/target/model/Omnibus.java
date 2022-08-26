@@ -1,5 +1,6 @@
 package sample.target.model;
 
+import com.hedera.hashgraph.protoparse.EnumWithProtoOrdinal;
 import com.hedera.hashgraph.protoparse.OneOf;
 import sample.target.proto.schemas.OmnibusSchema;
 
@@ -24,7 +25,7 @@ public record Omnibus(
         List<Float> floatNumberList, List<Double> doubleNumberList,
         List<String> memoList, List<byte[]> randomBytesList,
         List<Nested> nestedList, List<Object> fruitList) {
-    public enum Everything {
+    public enum Everything implements EnumWithProtoOrdinal {
         INT32,
         INT64,
         UINT32,
@@ -41,7 +42,12 @@ public record Omnibus(
         DOUBLE,
         MEMO,
         RANDOM_BYTES,
-        NESTED
+        NESTED;
+
+        @Override
+        public int protoOrdinal() {
+            return ordinal();
+        }
     }
 
     public static final class Builder {

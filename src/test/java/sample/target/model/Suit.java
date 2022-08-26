@@ -1,7 +1,14 @@
 package sample.target.model;
 
-public enum Suit {
+import com.hedera.hashgraph.protoparse.EnumWithProtoOrdinal;
+
+public enum Suit implements EnumWithProtoOrdinal {
 	ACES, SPADES, CLUBS, DIAMONDS;
+
+	@Override
+	public int protoOrdinal() {
+		return ordinal();
+	}
 
 	public static Suit fromOrdinal(final int ordinal) {
 		return switch (ordinal) {

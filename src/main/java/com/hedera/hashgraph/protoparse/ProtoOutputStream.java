@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import static com.hedera.hashgraph.protoparse.ProtoConstants.*;
@@ -17,6 +18,7 @@ import static com.hedera.hashgraph.protoparse.ProtoConstants.*;
  *  - writeMessage(fieldNumber, ProtoBuilder)
  *  - writeMessage(fieldNumber, byte[]) // could have ByteBuffer and InputStream variants if you wanted to
  */
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class ProtoOutputStream {
     private static final String FIELD_ASSERT_MSG = "Field %s doesn't belong to the expected schema";
 
@@ -26,6 +28,35 @@ public class ProtoOutputStream {
     public ProtoOutputStream(Predicate<FieldDefinition> fieldChecker, OutputStream out) {
         this.out = Objects.requireNonNull(out);
         this.fieldChecker = Objects.requireNonNull(fieldChecker);
+    }
+
+    // === OPTIONAL VERSIONS OF WRITE METHODS
+    public void writeOptionalInteger(FieldDefinition field, Optional<Integer> value) throws IOException {
+        if (value != null && value.isPresent()) writeInteger(field,value.get());
+    }
+    public void writeOptionalLong(FieldDefinition field, Optional<Long> value) throws IOException {
+        if (value != null && value.isPresent()) writeLong(field,value.get());
+    }
+    public void writeOptionalFloat(FieldDefinition field, Optional<Float> value) throws IOException {
+        if (value != null && value.isPresent()) writeFloat(field,value.get());
+    }
+    public void writeOptionalDouble(FieldDefinition field, Optional<Double> value) throws IOException {
+        if (value != null && value.isPresent()) writeDouble(field,value.get());
+    }
+    public void writeOptionalBoolean(FieldDefinition field, Optional<Boolean> value) throws IOException {
+        if (value != null && value.isPresent()) writeBoolean(field,value.get());
+    }
+    public void writeOptionalEnum(FieldDefinition field, Optional<EnumWithProtoOrdinal> value) throws IOException {
+        if (value != null && value.isPresent()) writeEnum(field,value.get());
+    }
+    public void writeOptionalString(FieldDefinition field, Optional<String> value) throws IOException {
+        if (value != null && value.isPresent()) writeString(field,value.get());
+    }
+    public void writeOptionalBytes(FieldDefinition field, Optional<byte[]> value) throws IOException {
+        if (value != null && value.isPresent()) writeBytes(field,value.get());
+    }
+    public <T> void writeOptionalMessage(FieldDefinition field, Optional<T> message, ProtoWriter<T> writer) throws IOException {
+        if (message != null && message.isPresent()) writeMessage(field,message.get(),writer);
     }
 
     public void writeInteger(FieldDefinition field, int value) throws IOException {
@@ -153,17 +184,17 @@ public class ProtoOutputStream {
         }
     }
 
-    public void writeEnum(FieldDefinition field, int ordinal) throws IOException {
+    public void writeEnum(FieldDefinition field, EnumWithProtoOrdinal enumValue) throws IOException {
         assert fieldChecker.test(field) : FIELD_ASSERT_MSG.formatted(field);
         assert field.type() == FieldType.ENUM : "Not an enum type " + field;
         assert !field.repeated() : "Use ProtoOutputStream#writeEnumList with repeated types";
 
-        if (ordinal == 0) {
+        if (enumValue == null || enumValue.protoOrdinal() == 0) {
             return;
         }
 
         writeTag(field, WIRE_TYPE_VARINT_OR_ZIGZAG);
-        writeVarint(ordinal, false);
+        writeVarint(enumValue.protoOrdinal(), false);
     }
 
     public void writeString(FieldDefinition field, String value) throws IOException {

@@ -23,7 +23,7 @@ public class OmnibusWriter implements ProtoWriter<Omnibus> {
         pb.writeLong(OmnibusSchema.FIXED64_NUMBER, omnibus.fixed64Number());
         pb.writeLong(OmnibusSchema.SFIXED64_NUMBER, omnibus.sfixed64Number());
         pb.writeBoolean(OmnibusSchema.FLAG, omnibus.flag());
-        pb.writeEnum(OmnibusSchema.SUIT, omnibus.suitEnum().ordinal());
+        pb.writeEnum(OmnibusSchema.SUIT, omnibus.suitEnum());
         pb.writeFloat(OmnibusSchema.FLOAT_NUMBER, omnibus.floatNumber());
         pb.writeDouble(OmnibusSchema.DOUBLE_NUMBER, omnibus.doubleNumber());
         pb.writeBytes(OmnibusSchema.RANDOM_BYTES, omnibus.randomBytes());
@@ -67,7 +67,7 @@ public class OmnibusWriter implements ProtoWriter<Omnibus> {
                 case FIXED64 -> pb.writeLong(OmnibusSchema.FIXED64_UNIQUE, oneOfEverything.as());
                 case SFIXED64 -> pb.writeLong(OmnibusSchema.SFIXED64_UNIQUE, oneOfEverything.as());
                 case FLAG -> pb.writeBoolean(OmnibusSchema.FLAG_UNIQUE, oneOfEverything.as());
-                case SUIT -> pb.writeEnum(OmnibusSchema.SUIT_UNIQUE, ((Suit)oneOfEverything.as()).ordinal());
+                case SUIT -> pb.writeEnum(OmnibusSchema.SUIT_UNIQUE, ((Suit)oneOfEverything.as()));
                 case FLOAT -> pb.writeFloat(OmnibusSchema.FLOAT_UNIQUE, oneOfEverything.as());
                 case DOUBLE -> pb.writeDouble(OmnibusSchema.DOUBLE_UNIQUE, oneOfEverything.as());
                 case RANDOM_BYTES -> pb.writeBytes(OmnibusSchema.RANDOM_BYTES_UNIQUE, oneOfEverything.as());
