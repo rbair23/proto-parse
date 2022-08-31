@@ -3,6 +3,7 @@ package com.hedera.hashgraph.protoparse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
@@ -52,7 +53,7 @@ public class ProtoOutputStream {
     public void writeOptionalString(FieldDefinition field, Optional<String> value) throws IOException {
         if (value != null && value.isPresent()) writeString(field,value.get());
     }
-    public void writeOptionalBytes(FieldDefinition field, Optional<byte[]> value) throws IOException {
+    public void writeOptionalBytes(FieldDefinition field, Optional<ByteBuffer> value) throws IOException {
         if (value != null && value.isPresent()) writeBytes(field,value.get());
     }
     public <T> void writeOptionalMessage(FieldDefinition field, Optional<T> message, ProtoWriter<T> writer) throws IOException {
@@ -215,11 +216,13 @@ public class ProtoOutputStream {
         out.write(bytes);
     }
 
-    public void writeBytes(FieldDefinition field, byte[] value) throws IOException {
+    public void writeBytes(FieldDefinition field, ByteBuffer value) throws IOException {
         assert fieldChecker.test(field) : FIELD_ASSERT_MSG.formatted(field);
         assert field.type() == FieldType.BYTES : "Not a byte[] type " + field;
         assert !field.repeated() : "Use ProtoOutputStream#writeBytesList with repeated types";
-        _writeBytes(field, value);
+        final byte[] bytes = new byte[value.capacity()];
+        value.get(0, bytes); // TODO be nice to avoid copy here but not sure how, could reuse byte[]
+        _writeBytes(field, bytes);
     }
 
     public void _writeBytes(FieldDefinition field, byte[] value) throws IOException {
@@ -412,13 +415,16 @@ public class ProtoOutputStream {
         }
     }
 
-    public void writeBytesList(FieldDefinition field, List<byte[]> list) throws IOException {
+    public void writeBytesList(FieldDefinition field, List<ByteBuffer> list) throws IOException {
         if (list.isEmpty()) {
             return;
         }
 
-        for (final byte[] value : list) {
-            _writeBytes(field, value);
+        for (final ByteBuffer value : list) {
+            // TODO be nice to avoid copy here but not sure how, could reuse byte[] if _writeBytes supported length to read from byte[]
+            final byte[] bytes = new byte[value.capacity()];
+            value.get(0, bytes);
+            _writeBytes(field, bytes);
         }
     }
 

@@ -2,6 +2,7 @@ package com.hedera.hashgraph.protoparse;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.util.List;
 
 public interface ParseListener {
@@ -36,7 +37,7 @@ public interface ParseListener {
 
 	}
 
-	default void bytesField(int fieldNum, byte[] value) {
+	default void bytesField(int fieldNum, ByteBuffer value) {
 
 	}
 

@@ -9,6 +9,8 @@ import sample.target.model.Suit;
 import sample.target.proto.parsers.OmnibusParser;
 import test.proto.*;
 
+import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
@@ -280,13 +282,14 @@ class ParseTest {
 	@ParameterizedTest
 	@MethodSource("byteArrays")
 	void parseByteArraysOnly(byte[] val) throws Exception {
+		final ByteBuffer buf = ByteBuffer.wrap(val).asReadOnlyBuffer();
 		final var protobuf = test.proto.Omnibus.newBuilder()
 				.setRandomBytes(ByteString.copyFrom(val))
 				.build()
 				.toByteArray();
 
 		final var omnibus = parser.parse(protobuf);
-		assertArrayEquals(val, omnibus.randomBytes());
+		assertEquals(buf, omnibus.randomBytes());
 	}
 
 	@ParameterizedTest
@@ -479,7 +482,7 @@ class ParseTest {
 
 		omnibus = parser.parse(protobuf);
 		assertEquals(sample.target.model.Omnibus.Everything.RANDOM_BYTES, omnibus.everything().kind());
-		assertArrayEquals(new byte[]{(byte) 55, (byte) 56}, omnibus.everything().as());
+		assertEquals(ByteBuffer.wrap(new byte[]{(byte) 55, (byte) 56}).asReadOnlyBuffer(), omnibus.everything().as());
 
 		protobuf = Omnibus.newBuilder()
 				.setNestedUnique(Nested.newBuilder().setNestedMemo("Reminder").build())
@@ -643,11 +646,13 @@ class ParseTest {
 		assertEquals(list, omnibus.fixed64NumberList());
 	}
 
-	static Stream<List<byte[]>> byteList() {
+	static Stream<List<ByteBuffer>> byteList() {
+		final List<byte[]> empty = Collections.emptyList();
 		return Stream.of(
-				Collections.emptyList(),
+				empty,
 				List.of("What".getBytes(), "Is".getBytes()),
-				List.of("This".getBytes(), "Gonna".getBytes(), "Do?".getBytes()));
+				List.of("This".getBytes(), "Gonna".getBytes(), "Do?".getBytes()))
+				.map(arrayList -> arrayList.stream().map(array -> ByteBuffer.wrap(array).asReadOnlyBuffer()).toList());
 	}
 
 	@ParameterizedTest
@@ -704,18 +709,26 @@ class ParseTest {
 
 	@ParameterizedTest
 	@MethodSource("byteList")
-	void parseBytesListOnly(List<byte[]> list) throws Exception {
+	void parseBytesListOnly(List<ByteBuffer> list) throws Exception {
 		final var protobufBuilder = test.proto.Omnibus.newBuilder();
-		for (byte[] bytes : list) {
+		for (ByteBuffer bytes : list) {
 			protobufBuilder.addRandomBytesList(ByteString.copyFrom(bytes));
+			bytes.clear(); // important reset position after proto has read
 		}
 		final var protobuf = protobufBuilder.build().toByteArray();
 
 		final var omnibus = parser.parse(protobuf);
 		assertEquals(list.size(), omnibus.randomBytesList().size());
 		for (int i = 0; i < list.size(); i++) {
-			assertArrayEquals(list.get(i), omnibus.randomBytesList().get(i));
+			assertEquals(list.get(i), omnibus.randomBytesList().get(i),
+					"list.get(i)["+byteBufferToString(list.get(i))+"] is not equal to omnibus.randomBytesList().get(i)["+byteBufferToString(omnibus.randomBytesList().get(i))+"]");
 		}
+	}
+
+	private static String byteBufferToString(ByteBuffer b) {
+		byte[] bytes = new byte[b.capacity()];
+		b.get(0,bytes);
+		return "ByteBuffer{position="+b.position()+", capacity="+b.capacity()+", data="+ Arrays.toString(bytes)+"}";
 	}
 
 	@ParameterizedTest

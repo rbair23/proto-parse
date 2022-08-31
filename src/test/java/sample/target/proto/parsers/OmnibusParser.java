@@ -34,7 +34,7 @@ public class OmnibusParser extends ProtoParser {
 	private double doubleNumber;
 
 	private String memo;
-	private byte[] randomBytes;
+	private ByteBuffer randomBytes;
 	private Nested nested;
 
 	private OneOf<Fruits.FruitKind, Object> fruit; // Apple or Banana
@@ -59,7 +59,7 @@ public class OmnibusParser extends ProtoParser {
 	private List<Double> doubleNumberList = Collections.emptyList();
 
 	private List<String> memoList = null;
-	private List<byte[]> randomBytesList = null;
+	private List<ByteBuffer> randomBytesList = null;
 	private List<Nested> nestedList = null;
 
 	private List<Object> fruitList = null; // Apple or Banana
@@ -116,7 +116,7 @@ public class OmnibusParser extends ProtoParser {
 		this.doubleNumber = 0;
 
 		this.memo = "";
-		this.randomBytes = new byte[0]; // arrays must have default of empty
+		this.randomBytes = ByteBuffer.wrap(new byte[0]).asReadOnlyBuffer(); // arrays must have default of empty
 		this.nested = null;
 
 		this.fruit = null;
@@ -294,16 +294,16 @@ public class OmnibusParser extends ProtoParser {
 	}
 
 	@Override
-	public void bytesField(int fieldNum, byte[] value) {
+	public void bytesField(int fieldNum, ByteBuffer value) {
 		switch (fieldNum) {
-			case 2 -> randomBytes = Arrays.copyOf(value, value.length);
+			case 2 -> randomBytes = value;
 			case 252 ->
-					everything = new OneOf<>(fieldNum, Omnibus.Everything.RANDOM_BYTES, Arrays.copyOf(value, value.length));
+					everything = new OneOf<>(fieldNum, Omnibus.Everything.RANDOM_BYTES, value);
 			case 315 -> {
 				if (randomBytesList == null) {
 					randomBytesList = new ArrayList<>();
 				}
-				randomBytesList.add(Arrays.copyOf(value, value.length));
+				randomBytesList.add(value);
 			}
 			default -> throw new AssertionError("Not implemented in test code fieldNum='" + fieldNum + "'");
 		}

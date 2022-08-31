@@ -10,6 +10,7 @@ import sample.target.proto.writers.AppleWriter;
 import sample.target.proto.writers.OmnibusWriter;
 
 import java.io.ByteArrayOutputStream;
+import java.nio.ByteBuffer;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
@@ -365,6 +366,7 @@ class WriterTest {
     @ParameterizedTest
     @MethodSource("byteArrays")
     void writeByteArraysOnly(byte[] val) throws Exception {
+        final ByteBuffer buf = ByteBuffer.wrap(val).asReadOnlyBuffer();
         final var protobuf = test.proto.Omnibus.newBuilder()
                 .setRandomBytes(ByteString.copyFrom(val))
                 .build()
@@ -372,7 +374,7 @@ class WriterTest {
 
         final var out = new ByteArrayOutputStream();
         new OmnibusWriter().write(
-                new Omnibus.Builder().randomBytes(val).build(), out);
+                new Omnibus.Builder().randomBytes(buf).build(), out);
         final var protobuf2 = out.toByteArray();
 
         assertArrayEquals(protobuf, protobuf2);
@@ -610,7 +612,7 @@ class WriterTest {
 
         out = new ByteArrayOutputStream();
         new OmnibusWriter().write(
-                new Omnibus.Builder().randomBytesUnique(new byte[]{(byte) 55, (byte) 56}).build(), out);
+                new Omnibus.Builder().randomBytesUnique(ByteBuffer.wrap(new byte[]{(byte) 55, (byte) 56}).asReadOnlyBuffer()).build(), out);
         protobuf2 = out.toByteArray();
 
         assertArrayEquals(protobuf, protobuf2);
@@ -820,11 +822,13 @@ class WriterTest {
         assertArrayEquals(protobuf, protobuf2);
     }
 
-    static Stream<List<byte[]>> byteList() {
+    static Stream<List<ByteBuffer>> byteList() {
+        final List<byte[]> empty = Collections.emptyList();
         return Stream.of(
-                Collections.emptyList(),
-                List.of("What".getBytes(), "Is".getBytes()),
-                List.of("This".getBytes(), "Gonna".getBytes(), "Do?".getBytes()));
+                        empty,
+                        List.of("What".getBytes(), "Is".getBytes()),
+                        List.of("This".getBytes(), "Gonna".getBytes(), "Do?".getBytes()))
+                .map(arrayList -> arrayList.stream().map(array -> ByteBuffer.wrap(array).asReadOnlyBuffer()).toList());
     }
 
     @ParameterizedTest
@@ -897,9 +901,9 @@ class WriterTest {
 
     @ParameterizedTest
     @MethodSource("byteList")
-    void parseBytesListOnly(List<byte[]> list) throws Exception {
+    void parseBytesListOnly(List<ByteBuffer> list) throws Exception {
         final var protobufBuilder = test.proto.Omnibus.newBuilder();
-        for (byte[] bytes : list) {
+        for (ByteBuffer bytes : list) {
             protobufBuilder.addRandomBytesList(ByteString.copyFrom(bytes));
         }
         final var protobuf = protobufBuilder.build().toByteArray();

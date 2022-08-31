@@ -4,6 +4,7 @@ import com.hedera.hashgraph.protoparse.EnumWithProtoOrdinal;
 import com.hedera.hashgraph.protoparse.OneOf;
 import sample.target.proto.schemas.OmnibusSchema;
 
+import java.nio.ByteBuffer;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public record Omnibus(
         int sint32Number, long sint64Number,
         int sfixed32Number, long sfixed64Number, int fixed32Number, long fixed64Number,
         float floatNumber, double doubleNumber,
-        String memo, byte[] randomBytes, Nested nested,
+        String memo, ByteBuffer randomBytes, Nested nested,
         OneOf<Fruits.FruitKind, Object> fruit,
         OneOf<Everything, Object> everything,
         List<Integer> int32NumberList, List<Long> int64NumberList,
@@ -23,7 +24,7 @@ public record Omnibus(
         List<Integer> sfixed32NumberList, List<Long> sfixed64NumberList,
         List<Integer> fixed32NumberList, List<Long> fixed64NumberList,
         List<Float> floatNumberList, List<Double> doubleNumberList,
-        List<String> memoList, List<byte[]> randomBytesList,
+        List<String> memoList, List<ByteBuffer> randomBytesList,
         List<Nested> nestedList, List<Object> fruitList) {
     public enum Everything implements EnumWithProtoOrdinal {
         INT32,
@@ -66,7 +67,7 @@ public record Omnibus(
         private float floatNumber;
         private double doubleNumber;
         private String memo = "";
-        private byte[] randomBytes = new byte[0];
+        private ByteBuffer randomBytes = ByteBuffer.wrap(new byte[0]).asReadOnlyBuffer();
         private Nested nested;
         private OneOf<Fruits.FruitKind, Object> fruit;
         private OneOf<Everything, Object> everything;
@@ -85,7 +86,7 @@ public record Omnibus(
         private List<Float> floatNumberList = Collections.emptyList();
         private List<Double> doubleNumberList = Collections.emptyList();
         private List<String> memoList = Collections.emptyList();
-        private List<byte[]> randomBytesList = Collections.emptyList();
+        private List<ByteBuffer> randomBytesList = Collections.emptyList();
         private List<Nested> nestedList = Collections.emptyList();
 //        private List<Object> fruitList;
 
@@ -164,7 +165,7 @@ public record Omnibus(
             return this;
         }
 
-        public Builder randomBytes(byte[] value) {
+        public Builder randomBytes(ByteBuffer value) {
             this.randomBytes = value;
             return this;
         }
@@ -259,7 +260,7 @@ public record Omnibus(
             return this;
         }
 
-        public Builder randomBytesUnique(byte[] value) {
+        public Builder randomBytesUnique(ByteBuffer value) {
             everything = new OneOf<>(OmnibusSchema.RANDOM_BYTES_UNIQUE.number(), Everything.RANDOM_BYTES, value);
             return this;
         }
@@ -344,7 +345,7 @@ public record Omnibus(
             return this;
         }
 
-        public Builder randomBytesList(List<byte[]> value) {
+        public Builder randomBytesList(List<ByteBuffer> value) {
             this.randomBytesList = value;
             return this;
         }

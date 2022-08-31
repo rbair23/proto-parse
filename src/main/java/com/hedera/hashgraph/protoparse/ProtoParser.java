@@ -486,7 +486,7 @@ public abstract class ProtoParser implements ParseListener {
 			return new String(data);
 		}
 
-		private byte[] readBytes(String fieldName) throws IOException, MalformedProtobufException {
+		private ByteBuffer readBytes(String fieldName) throws IOException, MalformedProtobufException {
 			final long length = readLengthFromStream(); // TODO If length > 2GB throw like mad
 			final byte[] data = new byte[(int) length];
 			final long read = this.read(data, 0, (int) length);
@@ -494,7 +494,7 @@ public abstract class ProtoParser implements ParseListener {
 				throw new MalformedProtobufException("Truncated protobuf, missing at least " +
 						(length - read) + " bytes");
 			}
-			return data;
+			return ByteBuffer.wrap(data).asReadOnlyBuffer();
 		}
 
 		/**
