@@ -2,6 +2,7 @@ package com.hedera.hashgraph.protoparse;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +85,8 @@ public abstract class ProtoParser implements ParseListener {
 			byteBufferInputStreamAdapter.reset(protobuf);
 			this.start(byteBufferInputStreamAdapter);
 		} catch (IOException ignored) {
-			assert false : "It should never be possible for IOException to be thrown here.";
+			throw new UncheckedIOException(ignored);
+//			assert false : "It should never be possible for IOException to be thrown here.";
 		}
 	}
 
@@ -105,7 +107,8 @@ public abstract class ProtoParser implements ParseListener {
 			byteArrayInputStreamAdapter.reset(protobuf);
 			this.start(byteArrayInputStreamAdapter);
 		} catch (IOException ignored) {
-			assert false : "It should never be possible for IOException to be thrown here.";
+			throw new UncheckedIOException(ignored);
+//			assert false : "It should never be possible for IOException to be thrown here.";
 		}
 	}
 
@@ -172,11 +175,21 @@ public abstract class ProtoParser implements ParseListener {
 			// Ask the subclass to inform us what field this represents.
 			final var f = getFieldDefinition(field);
 
+
 			// It may be that the parser subclass doesn't know about this field. In that case, we
 			// just need to read off the bytes for this field to skip it and move on to the next one.
 			if (f == null) {
 				protoStream.skipField(wireType);
 			} else {
+				// special handling for value types that are wrapped in a object
+				if (f.optional()) {
+					// Read the message size, it is not needed
+					final int valueTypeMessageSize = (int) protoStream.readVarint("ValueTypeMessageSize", false);
+					// TODO could validate this size against bytes read or expected filed type
+					// read inner tag
+					final int tag2 = (int) protoStream.readVarint("TAG", false);
+					// TODO check this type against expected field type
+				}
 				// Given the wire type and the field type, parse the field
 				// (which will also invoke the appropriate callback).
 				// TODO Validate that the wire type is of the expected kind

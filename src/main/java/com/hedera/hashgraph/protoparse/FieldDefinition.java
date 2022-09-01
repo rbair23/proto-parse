@@ -19,9 +19,10 @@ package com.hedera.hashgraph.protoparse;
  * @param name     The name of the field as contained in the schema. Cannot be null.
  * @param type     The type of the field as contained in the schema. Cannot be null.
  * @param repeated Whether this is a "repeated" field
+ * @param optional Whether this is a "optional" field - which uses Protobuf built in value types to wrap raw value
  * @param number   The field number. Must be &gt;= 0.
  */
-public record FieldDefinition(String name, FieldType type, boolean repeated, int number) {
+public record FieldDefinition(String name, FieldType type, boolean repeated, boolean optional, int number) {
     public FieldDefinition {
         if (name == null) {
             throw new NullPointerException("Name must be specified on a FieldDefinition");
@@ -34,5 +35,17 @@ public record FieldDefinition(String name, FieldType type, boolean repeated, int
         if (number < 0) {
             throw new IllegalArgumentException("The field number must be >= 0");
         }
+    }
+
+    /**
+     * Simple constructor for non-optional types
+     *
+     * @param name The name of the field as contained in the schema. Cannot be null.
+     * @param type The type of the field as contained in the schema. Cannot be null.
+     * @param repeated Whether this is a "repeated" field
+     * @param number The field number. Must be &gt;= 0.
+     */
+    public FieldDefinition(String name, FieldType type, boolean repeated, int number) {
+        this(name, type, repeated, false, number);
     }
 }

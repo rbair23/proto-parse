@@ -33,31 +33,140 @@ public class ProtoOutputStream {
 
     // === OPTIONAL VERSIONS OF WRITE METHODS
     public void writeOptionalInteger(FieldDefinition field, Optional<Integer> value) throws IOException {
-        if (value != null && value.isPresent()) writeInteger(field,value.get());
+        if (value != null && value.isPresent()) {
+            // TODO this will work for now could be more optimal
+            writeTag(field, WIRE_TYPE_DELIMITED);
+            final var baos = new ByteArrayOutputStream();
+            final ProtoOutputStream messageProtoOutputStream = new ProtoOutputStream(fd -> true,baos);
+            messageProtoOutputStream.writeInteger(
+                    new FieldDefinition("value",field.type(),false,1),
+                    value.get());
+            writeVarint(baos.size(), false);
+            if (baos.size() > 0) {
+                out.write(baos.toByteArray());
+            }
+        }
     }
     public void writeOptionalLong(FieldDefinition field, Optional<Long> value) throws IOException {
-        if (value != null && value.isPresent()) writeLong(field,value.get());
+        if (value != null && value.isPresent()) {
+            // TODO this will work for now could be more optimal
+            writeTag(field, WIRE_TYPE_DELIMITED);
+            final var baos = new ByteArrayOutputStream();
+            final ProtoOutputStream messageProtoOutputStream = new ProtoOutputStream(fd -> true,baos);
+            messageProtoOutputStream.writeLong(
+                    new FieldDefinition("value",field.type(),false,1),
+                    value.get());
+            writeVarint(baos.size(), false);
+            if (baos.size() > 0) {
+                out.write(baos.toByteArray());
+            }
+        }
     }
     public void writeOptionalFloat(FieldDefinition field, Optional<Float> value) throws IOException {
-        if (value != null && value.isPresent()) writeFloat(field,value.get());
+        if (value != null && value.isPresent()) {
+            // TODO this will work for now could be more optimal
+            writeTag(field, WIRE_TYPE_DELIMITED);
+            final var baos = new ByteArrayOutputStream();
+            final ProtoOutputStream messageProtoOutputStream = new ProtoOutputStream(fd -> true,baos);
+            messageProtoOutputStream.writeFloat(
+                    new FieldDefinition("value",field.type(),false,1),
+                    value.get());
+            writeVarint(baos.size(), false);
+            if (baos.size() > 0) {
+                out.write(baos.toByteArray());
+            }
+        }
     }
     public void writeOptionalDouble(FieldDefinition field, Optional<Double> value) throws IOException {
-        if (value != null && value.isPresent()) writeDouble(field,value.get());
+        if (value != null && value.isPresent()) {
+            // TODO this will work for now could be more optimal
+            writeTag(field, WIRE_TYPE_DELIMITED);
+            final var baos = new ByteArrayOutputStream();
+            final ProtoOutputStream messageProtoOutputStream = new ProtoOutputStream(fd -> true,baos);
+            messageProtoOutputStream.writeDouble(
+                    new FieldDefinition("value",field.type(),false,1),
+                    value.get());
+            writeVarint(baos.size(), false);
+            if (baos.size() > 0) {
+                out.write(baos.toByteArray());
+            }
+        }
     }
     public void writeOptionalBoolean(FieldDefinition field, Optional<Boolean> value) throws IOException {
-        if (value != null && value.isPresent()) writeBoolean(field,value.get());
+        if (value != null && value.isPresent()) {
+            // TODO this will work for now could be more optimal
+            writeTag(field, WIRE_TYPE_DELIMITED);
+            final var baos = new ByteArrayOutputStream();
+            final ProtoOutputStream messageProtoOutputStream = new ProtoOutputStream(fd -> true,baos);
+            messageProtoOutputStream.writeBoolean(
+                    new FieldDefinition("value",field.type(),false,1),
+                    value.get());
+            writeVarint(baos.size(), false);
+            if (baos.size() > 0) {
+                out.write(baos.toByteArray());
+            }
+        }
     }
     public void writeOptionalEnum(FieldDefinition field, Optional<? extends EnumWithProtoOrdinal> value) throws IOException {
-        if (value != null && value.isPresent()) writeEnum(field,value.get());
+        if (value != null && value.isPresent()) {
+            // TODO this will work for now could be more optimal
+            writeTag(field, WIRE_TYPE_DELIMITED);
+            final var baos = new ByteArrayOutputStream();
+            final ProtoOutputStream messageProtoOutputStream = new ProtoOutputStream(fd -> true,baos);
+            messageProtoOutputStream.writeEnum(
+                    new FieldDefinition("value",field.type(),false,1),
+                    value.get());
+            writeVarint(baos.size(), false);
+            if (baos.size() > 0) {
+                out.write(baos.toByteArray());
+            }
+        }
     }
     public void writeOptionalString(FieldDefinition field, Optional<String> value) throws IOException {
-        if (value != null && value.isPresent()) writeString(field,value.get());
+        if (value != null && value.isPresent()) {
+            // TODO this will work for now could be more optimal
+            writeTag(field, WIRE_TYPE_DELIMITED);
+            final var baos = new ByteArrayOutputStream();
+            final ProtoOutputStream messageProtoOutputStream = new ProtoOutputStream(fd -> true,baos);
+            messageProtoOutputStream.writeString(
+                    new FieldDefinition("value",field.type(),false,1),
+                    value.get());
+            writeVarint(baos.size(), false);
+            if (baos.size() > 0) {
+                out.write(baos.toByteArray());
+            }
+        }
     }
     public void writeOptionalBytes(FieldDefinition field, Optional<ByteBuffer> value) throws IOException {
-        if (value != null && value.isPresent()) writeBytes(field,value.get());
+        if (value != null && value.isPresent()) {
+            // TODO this will work for now could be more optimal
+            writeTag(field, WIRE_TYPE_DELIMITED);
+            final var baos = new ByteArrayOutputStream();
+            final ProtoOutputStream messageProtoOutputStream = new ProtoOutputStream(fd -> true,baos);
+            messageProtoOutputStream.writeBytes(
+                    new FieldDefinition("value",field.type(),false,1),
+                    value.get());
+            writeVarint(baos.size(), false);
+            if (baos.size() > 0) {
+                out.write(baos.toByteArray());
+            }
+        }
     }
     public <T> void writeOptionalMessage(FieldDefinition field, Optional<T> message, ProtoWriter<T> writer) throws IOException {
-        if (message != null && message.isPresent()) writeMessage(field,message.get(),writer);
+        if (message != null && message.isPresent()) {
+            // TODO this will work for now could be more optimal
+            writeTag(field, WIRE_TYPE_DELIMITED);
+            final var baos = new ByteArrayOutputStream();
+            final ProtoOutputStream messageProtoOutputStream = new ProtoOutputStream(fd -> true,baos);
+            messageProtoOutputStream.writeMessage(
+                    new FieldDefinition("value",field.type(),false,1),
+                    message.get(), writer);
+            writeVarint(baos.size(), false);
+            if (baos.size() > 0) {
+                out.write(baos.toByteArray());
+            }
+            writeMessage(field,message.get(),writer);
+        }
     }
 
     public void writeInteger(FieldDefinition field, int value) throws IOException {
