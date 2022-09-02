@@ -177,7 +177,7 @@ public class ProtoOutputStream {
         } : "Not an integer type " + field;
         assert !field.repeated() : "Use ProtoOutputStream#writeIntegerList with repeated types";
 
-        if (value == 0) {
+        if (!field.oneOf() && value == 0) {
             return;
         }
 
@@ -214,7 +214,7 @@ public class ProtoOutputStream {
         } : "Not a long type " + field;
         assert !field.repeated() : "Use ProtoOutputStream#writeLongList with repeated types";
 
-        if (value == 0) {
+        if (!field.oneOf() && value == 0) {
             return;
         }
 
@@ -262,7 +262,7 @@ public class ProtoOutputStream {
         assert field.type() == FieldType.FLOAT : "Not a float type " + field;
         assert !field.repeated() : "Use ProtoOutputStream#writeFloatList with repeated types";
 
-        if (value == 0) {
+        if (!field.oneOf() && value == 0) {
             return;
         }
 
@@ -275,7 +275,7 @@ public class ProtoOutputStream {
         assert field.type() == FieldType.DOUBLE : "Not a double type " + field;
         assert !field.repeated() : "Use ProtoOutputStream#writeDoubleList with repeated types";
 
-        if (value == 0) {
+        if (!field.oneOf() && value == 0) {
             return;
         }
 
@@ -288,7 +288,7 @@ public class ProtoOutputStream {
         assert field.type() == FieldType.BOOL : "Not a boolean type " + field;
         assert !field.repeated() : "Use ProtoOutputStream#writeBooleanList with repeated types";
 
-        if (value) {
+        if (value || field.oneOf()) {
             writeTag(field, WIRE_TYPE_VARINT_OR_ZIGZAG);
             out.write(1);
         }
@@ -299,7 +299,7 @@ public class ProtoOutputStream {
         assert field.type() == FieldType.ENUM : "Not an enum type " + field;
         assert !field.repeated() : "Use ProtoOutputStream#writeEnumList with repeated types";
 
-        if (enumValue == null || enumValue.protoOrdinal() == 0) {
+        if (!field.oneOf() && (enumValue == null || enumValue.protoOrdinal() == 0)) {
             return;
         }
 
@@ -315,7 +315,7 @@ public class ProtoOutputStream {
     }
 
     private void _writeString(FieldDefinition field, String value) throws IOException {
-        if (value == null || value.isBlank()) {
+        if (!field.oneOf() && (value == null || value.isBlank())) {
             return;
         }
 
@@ -331,11 +331,14 @@ public class ProtoOutputStream {
         assert !field.repeated() : "Use ProtoOutputStream#writeBytesList with repeated types";
         final byte[] bytes = new byte[value.capacity()];
         value.get(0, bytes); // TODO be nice to avoid copy here but not sure how, could reuse byte[]
-        _writeBytes(field, bytes);
+        _writeBytes(field, bytes, true);
     }
 
-    public void _writeBytes(FieldDefinition field, byte[] value) throws IOException {
-        if (value.length == 0) {
+    /**
+     * @param skipZeroLength this is true for normal single bytes and false for repeated lists
+     */
+    public void _writeBytes(FieldDefinition field, byte[] value, boolean skipZeroLength) throws IOException {
+        if (!field.oneOf() && (skipZeroLength && value.length == 0)) {
             return;
         }
         writeTag(field, WIRE_TYPE_DELIMITED);
@@ -351,7 +354,10 @@ public class ProtoOutputStream {
     }
 
     public <T> void _writeMessage(FieldDefinition field, T message, ProtoWriter<T> writer) throws IOException {
-        if (message != null) {
+        if (field.oneOf() && message == null) {
+            writeTag(field, WIRE_TYPE_DELIMITED);
+            writeVarint(0, false);
+        } else if (message != null) {
             writeTag(field, WIRE_TYPE_DELIMITED);
             final var baos = new ByteArrayOutputStream();
             writer.write(message, baos);
@@ -370,7 +376,7 @@ public class ProtoOutputStream {
         } : "Not an integer type " + field;
         assert field.repeated() : "Use ProtoOutputStream#writeInteger with non-repeated types";
 
-        if (list.isEmpty()) {
+        if (!field.oneOf() && list.isEmpty()) {
             return;
         }
 
@@ -423,7 +429,7 @@ public class ProtoOutputStream {
         } : "Not a long type " + field;
         assert field.repeated() : "Use ProtoOutputStream#writeLong with non-repeated types";
 
-        if (list.isEmpty()) {
+        if (!field.oneOf() && list.isEmpty()) {
             return;
         }
 
@@ -465,7 +471,7 @@ public class ProtoOutputStream {
         assert field.type() == FieldType.BOOL : "Not a boolean type " + field;
         assert field.repeated() : "Use ProtoOutputStream#writeBoolean with non-repeated types";
 
-        if (list.isEmpty()) {
+        if (!field.oneOf() && list.isEmpty()) {
             return;
         }
 
@@ -483,7 +489,7 @@ public class ProtoOutputStream {
         assert field.type() == FieldType.ENUM : "Not an enum type " + field;
         assert field.repeated() : "Use ProtoOutputStream#writeEnum with non-repeated types";
 
-        if (list.isEmpty()) {
+        if (!field.oneOf() && list.isEmpty()) {
             return;
         }
 
@@ -501,7 +507,7 @@ public class ProtoOutputStream {
         assert field.type() == FieldType.STRING : "Not a string type " + field;
         assert field.repeated() : "Use ProtoOutputStream#writeString with non-repeated types";
 
-        if (list.isEmpty()) {
+        if (!field.oneOf() && list.isEmpty()) {
             return;
         }
 
@@ -515,7 +521,7 @@ public class ProtoOutputStream {
         assert field.type() == FieldType.MESSAGE : "Not a message type " + field;
         assert field.repeated() : "Use ProtoOutputStream#writeMessage with non-repeated types";
 
-        if (list.isEmpty()) {
+        if (!field.oneOf() && list.isEmpty()) {
             return;
         }
 
@@ -525,7 +531,7 @@ public class ProtoOutputStream {
     }
 
     public void writeBytesList(FieldDefinition field, List<ByteBuffer> list) throws IOException {
-        if (list.isEmpty()) {
+        if (!field.oneOf() && list.isEmpty()) {
             return;
         }
 
@@ -533,7 +539,7 @@ public class ProtoOutputStream {
             // TODO be nice to avoid copy here but not sure how, could reuse byte[] if _writeBytes supported length to read from byte[]
             final byte[] bytes = new byte[value.capacity()];
             value.get(0, bytes);
-            _writeBytes(field, bytes);
+            _writeBytes(field, bytes, false);
         }
     }
 

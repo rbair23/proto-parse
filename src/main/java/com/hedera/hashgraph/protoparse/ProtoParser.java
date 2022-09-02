@@ -362,6 +362,9 @@ public abstract class ProtoParser implements ParseListener {
 		final var nestedStream = new LimitedStream(protoStream, (int) protoStream.readLengthFromStream());
 		objectField(field, nestedStream);
 		if (nestedStream.totalBytesRead < nestedStream.maxBytesToRead) {
+			new Exception("Extra bytes left after reading message, field="+field+
+					" totalBytesRead="+nestedStream.totalBytesRead+" maxBytesToRead="+nestedStream.maxBytesToRead)
+					.printStackTrace();
 			protoStream.skipNBytes(nestedStream.maxBytesToRead - nestedStream.totalBytesRead);
 		}
 	}
