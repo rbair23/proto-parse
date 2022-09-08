@@ -175,7 +175,6 @@ public abstract class ProtoParser implements ParseListener {
 			// Ask the subclass to inform us what field this represents.
 			final var f = getFieldDefinition(field);
 
-
 			// It may be that the parser subclass doesn't know about this field. In that case, we
 			// just need to read off the bytes for this field to skip it and move on to the next one.
 			if (f == null) {
@@ -185,10 +184,28 @@ public abstract class ProtoParser implements ParseListener {
 				if (f.optional()) {
 					// Read the message size, it is not needed
 					final int valueTypeMessageSize = (int) protoStream.readVarint("ValueTypeMessageSize", false);
-					// TODO could validate this size against bytes read or expected filed type
-					// read inner tag
-					final int tag2 = (int) protoStream.readVarint("TAG", false);
-					// TODO check this type against expected field type
+					if (valueTypeMessageSize > 0) {
+						// TODO could validate this size against bytes read or expected filed type
+						// read inner tag
+						final int tag2 = (int) protoStream.readVarint("TAG", false);
+						// TODO check this type against expected field type
+					} else {
+						// means optional is default value
+						switch (f.type()) {
+							case INT_32, UINT_32, SINT_32, FIXED_32, SFIXED_32 -> intField(field, 0);
+							case INT_64, UINT_64, SINT_64, FIXED_64, SFIXED_64 -> longField(field, 0);
+							case BOOL -> booleanField(field, false);
+							case ENUM -> enumField(field,0); // TODO ? is this right
+							case FLOAT -> floatField(field, 0);
+							case DOUBLE -> doubleField(field, 0);
+							case STRING -> stringField(field, "");
+							case BYTES -> bytesField(field, ByteBuffer.wrap(new byte[0]).asReadOnlyBuffer()); // TODO ? is this right
+							default -> {
+								throw new MalformedProtobufException("Unexpected and unknown field type " + f.type() + " cannot be parsed");
+							}
+						}
+						continue;
+					}
 				}
 				// Given the wire type and the field type, parse the field
 				// (which will also invoke the appropriate callback).
@@ -210,7 +227,7 @@ public abstract class ProtoParser implements ParseListener {
 					case SFIXED_64 -> handleSfixed64(field, f);
 					case FIXED_64 -> handleFixed64(field, f);
 					case DOUBLE -> handleDouble(field, f);
-					case MESSAGE -> handleMessage(field);
+					case MESSAGE -> handleMessage(field, f);
 					case STRING -> handleString(field, f);
 					case BYTES -> handleBytes(field, f);
 					default -> {
@@ -358,12 +375,13 @@ public abstract class ProtoParser implements ParseListener {
 		bytesField(field, protoStream.readBytes(f.name()));
 	}
 
-	private void handleMessage(int field) throws MalformedProtobufException, IOException {
+	private void handleMessage(int field, FieldDefinition f) throws MalformedProtobufException, IOException {
 		final var nestedStream = new LimitedStream(protoStream, (int) protoStream.readLengthFromStream());
 		objectField(field, nestedStream);
 		if (nestedStream.totalBytesRead < nestedStream.maxBytesToRead) {
 			new Exception("Extra bytes left after reading message, field="+field+
-					" totalBytesRead="+nestedStream.totalBytesRead+" maxBytesToRead="+nestedStream.maxBytesToRead)
+					" totalBytesRead="+nestedStream.totalBytesRead+" maxBytesToRead="+nestedStream.maxBytesToRead+
+					" fieldDefinition="+f)
 					.printStackTrace();
 			protoStream.skipNBytes(nestedStream.maxBytesToRead - nestedStream.totalBytesRead);
 		}
@@ -497,7 +515,7 @@ public abstract class ProtoParser implements ParseListener {
 			final long read = this.read(data, 0, (int) length);
 			if (read != length) {
 				throw new MalformedProtobufException("Truncated protobuf, missing at least " +
-						(length - read) + " bytes");
+						(length - read) + " bytes while reading field: "+fieldName);
 			}
 			return new String(data);
 		}

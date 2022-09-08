@@ -262,6 +262,7 @@ public class ProtoOutputStream {
         assert field.type() == FieldType.FLOAT : "Not a float type " + field;
         assert !field.repeated() : "Use ProtoOutputStream#writeFloatList with repeated types";
 
+        // When not a oneOf don't write default value
         if (!field.oneOf() && value == 0) {
             return;
         }
@@ -275,6 +276,7 @@ public class ProtoOutputStream {
         assert field.type() == FieldType.DOUBLE : "Not a double type " + field;
         assert !field.repeated() : "Use ProtoOutputStream#writeDoubleList with repeated types";
 
+        // When not a oneOf don't write default value
         if (!field.oneOf() && value == 0) {
             return;
         }
@@ -288,9 +290,10 @@ public class ProtoOutputStream {
         assert field.type() == FieldType.BOOL : "Not a boolean type " + field;
         assert !field.repeated() : "Use ProtoOutputStream#writeBooleanList with repeated types";
 
+        // In the case of oneOf we write the value even if it is default value of false
         if (value || field.oneOf()) {
             writeTag(field, WIRE_TYPE_VARINT_OR_ZIGZAG);
-            out.write(1);
+            out.write(value ? 1 : 0);
         }
     }
 
@@ -299,6 +302,7 @@ public class ProtoOutputStream {
         assert field.type() == FieldType.ENUM : "Not an enum type " + field;
         assert !field.repeated() : "Use ProtoOutputStream#writeEnumList with repeated types";
 
+        // When not a oneOf don't write default value
         if (!field.oneOf() && (enumValue == null || enumValue.protoOrdinal() == 0)) {
             return;
         }
@@ -315,6 +319,7 @@ public class ProtoOutputStream {
     }
 
     private void _writeString(FieldDefinition field, String value) throws IOException {
+        // When not a oneOf don't write default value
         if (!field.oneOf() && (value == null || value.isBlank())) {
             return;
         }
@@ -338,6 +343,7 @@ public class ProtoOutputStream {
      * @param skipZeroLength this is true for normal single bytes and false for repeated lists
      */
     public void _writeBytes(FieldDefinition field, byte[] value, boolean skipZeroLength) throws IOException {
+        // When not a oneOf don't write default value
         if (!field.oneOf() && (skipZeroLength && value.length == 0)) {
             return;
         }
@@ -354,6 +360,7 @@ public class ProtoOutputStream {
     }
 
     public <T> void _writeMessage(FieldDefinition field, T message, ProtoWriter<T> writer) throws IOException {
+        // When not a oneOf don't write default value
         if (field.oneOf() && message == null) {
             writeTag(field, WIRE_TYPE_DELIMITED);
             writeVarint(0, false);
@@ -376,6 +383,7 @@ public class ProtoOutputStream {
         } : "Not an integer type " + field;
         assert field.repeated() : "Use ProtoOutputStream#writeInteger with non-repeated types";
 
+        // When not a oneOf don't write default value
         if (!field.oneOf() && list.isEmpty()) {
             return;
         }
@@ -429,6 +437,7 @@ public class ProtoOutputStream {
         } : "Not a long type " + field;
         assert field.repeated() : "Use ProtoOutputStream#writeLong with non-repeated types";
 
+        // When not a oneOf don't write default value
         if (!field.oneOf() && list.isEmpty()) {
             return;
         }
@@ -471,6 +480,7 @@ public class ProtoOutputStream {
         assert field.type() == FieldType.BOOL : "Not a boolean type " + field;
         assert field.repeated() : "Use ProtoOutputStream#writeBoolean with non-repeated types";
 
+        // When not a oneOf don't write default value
         if (!field.oneOf() && list.isEmpty()) {
             return;
         }
@@ -489,6 +499,7 @@ public class ProtoOutputStream {
         assert field.type() == FieldType.ENUM : "Not an enum type " + field;
         assert field.repeated() : "Use ProtoOutputStream#writeEnum with non-repeated types";
 
+        // When not a oneOf don't write default value
         if (!field.oneOf() && list.isEmpty()) {
             return;
         }
@@ -507,6 +518,7 @@ public class ProtoOutputStream {
         assert field.type() == FieldType.STRING : "Not a string type " + field;
         assert field.repeated() : "Use ProtoOutputStream#writeString with non-repeated types";
 
+        // When not a oneOf don't write default value
         if (!field.oneOf() && list.isEmpty()) {
             return;
         }
@@ -521,6 +533,7 @@ public class ProtoOutputStream {
         assert field.type() == FieldType.MESSAGE : "Not a message type " + field;
         assert field.repeated() : "Use ProtoOutputStream#writeMessage with non-repeated types";
 
+        // When not a oneOf don't write default value
         if (!field.oneOf() && list.isEmpty()) {
             return;
         }
@@ -531,6 +544,7 @@ public class ProtoOutputStream {
     }
 
     public void writeBytesList(FieldDefinition field, List<ByteBuffer> list) throws IOException {
+        // When not a oneOf don't write default value
         if (!field.oneOf() && list.isEmpty()) {
             return;
         }
